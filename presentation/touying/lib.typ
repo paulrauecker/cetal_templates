@@ -30,7 +30,7 @@
   rgb("#CC79A7"), // reddish purple
   rgb("#56B4E9"), // sky blue
   rgb("#F0E442"), // yellow
-  rgb("#000000"), // black
+  rgb("#1A1A1A"), // near-black (dark text)
 )
 
 // ------------------------------------------------------------------ pieces

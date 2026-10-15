@@ -89,9 +89,9 @@ The templates define these as `cetalprimary` and `cetaltint` in beamerthemeCETAL
 | 5 | Reddish purple | #CC79A7 |
 | 6 | Sky blue | #56B4E9 |
 | 7 | Yellow | #F0E442 |
-| 8 | Black | #000000 |
+| 8 | Near-black (dark text) | #1A1A1A |
 
-Yellow is for fills and thick lines only, never thin lines or text on white. Brand colours never encode data; the first data colour (#0072B2) is a lighter, brighter blue than the primary, so do not swap one for the other.
+Yellow is for fills and thick lines only, never thin lines or text on white. Brand colours never encode data; the first data colour (#0072B2) is a lighter, brighter blue than the primary, so do not swap one for the other. Figures take their non-data colours from the brand neutrals: dark text for axes, ticks and labels, rules grey for grids.
 
 ## Typography
 
@@ -149,13 +149,21 @@ ytick.labelsize    : 7
 legend.fontsize    : 7
 legend.frameon     : False
 axes.linewidth     : 0.6
+text.color         : 1A1A1A    # dark text, also axes, ticks, legend
+axes.edgecolor     : 1A1A1A
+axes.labelcolor    : 1A1A1A
+xtick.color        : 1A1A1A
+ytick.color        : 1A1A1A
+legend.labelcolor  : 1A1A1A
+grid.color         : D0D0D0    # rules grey; grids off by default
+grid.linewidth     : 0.4
 lines.linewidth    : 1.0
 lines.markersize   : 3
 xtick.direction    : in
 ytick.direction    : in
 xtick.top          : True
 ytick.right        : True
-axes.prop_cycle    : cycler('color', ['0072B2', 'D55E00', '009E73', 'E69F00', 'CC79A7', '56B4E9', 'F0E442', '000000'])
+axes.prop_cycle    : cycler('color', ['0072B2', 'D55E00', '009E73', 'E69F00', 'CC79A7', '56B4E9', 'F0E442', '1A1A1A'])
 image.cmap         : viridis
 pdf.fonttype       : 42
 ps.fonttype        : 42

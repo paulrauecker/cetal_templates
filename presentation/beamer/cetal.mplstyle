@@ -22,7 +22,16 @@ legend.fontsize    : 7
 legend.frameon     : False
 
 axes.linewidth     : 0.6
-axes.prop_cycle    : cycler('color', ['0072B2', 'D55E00', '009E73', 'E69F00', 'CC79A7', '56B4E9', 'F0E442', '000000'])
+# Brand neutrals: dark text #1A1A1A instead of pure black, rules grey for grids (off by default)
+text.color         : 1A1A1A
+axes.edgecolor     : 1A1A1A
+axes.labelcolor    : 1A1A1A
+xtick.color        : 1A1A1A
+ytick.color        : 1A1A1A
+legend.labelcolor  : 1A1A1A
+grid.color         : D0D0D0
+grid.linewidth     : 0.4
+axes.prop_cycle    : cycler('color', ['0072B2', 'D55E00', '009E73', 'E69F00', 'CC79A7', '56B4E9', 'F0E442', '1A1A1A'])
 lines.linewidth    : 1.0
 lines.markersize   : 3
 errorbar.capsize   : 1.5
