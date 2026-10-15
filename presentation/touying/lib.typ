@@ -314,11 +314,15 @@
   set par(justify: false)
   // Bold is semibold, as in Beamer, and stays dark: emphasis in colour is `#alert[..]` only.
   set strong(delta: 200)
-  set list(marker: (
-    text(fill: cetal-primary, size: 0.7em, baseline: -0.15em, sym.triangle.filled.r),
+  // Indents and item spacing as in Beamer: bullet and number lists start their text in the
+  // same column.
+  set list(indent: 1.1em, body-indent: 0.53em, spacing: 0.88em, marker: (
+    // Drawn rather than a glyph (which comes from a fallback font and sat high): Beamer's size,
+    // centred on the lowercase letters. List markers ignore `baseline`, hence `move`.
+    move(dy: 0.16em, polygon(fill: cetal-primary, (0em, 0em), (0.4em, 0.23em), (0em, 0.46em))),
     text(fill: cetal-muted, [–]),
   ))
-  set enum(numbering: n => text(fill: cetal-primary)[#n.])
+  set enum(indent: 0.76em, spacing: 0.88em, numbering: n => text(fill: cetal-primary)[#n.])
   show link: set text(fill: cetal-primary)
   // Captions grey and unnumbered: slides have no "Figure 3" to refer to.
   set figure(numbering: none)
