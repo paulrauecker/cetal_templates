@@ -215,6 +215,7 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 | Lists | Primary triangles for bullets, grey dashes for sub-items; numbers in the primary colour |
 | Links | Primary colour, body font |
 | Captions | Grey, 9 pt, no "Figure 1" label |
+| Code | Source Code Pro on a tint panel at 0.8 of the body size; keywords in the primary colour, comments grey, everything else text colour |
 
 **Closing slide:** the same panel and lockup as the title slide, so the talk opens and closes on the same frame; funding acknowledgement with funder logos, then contact details. Put a summary slide before it, not after.
 

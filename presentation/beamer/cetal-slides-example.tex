@@ -69,6 +69,23 @@
   \slidecite{Synthetic example data. Real sources: Author et al., \emph{Journal} \textbf{12}, 345 (2026).}
 \end{frame}
 
+% Code needs a [fragile] frame.
+\begin{frame}[fragile]{One style file sets fonts and colours for every figure}
+\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as plt
+
+plt.style.use("cetal.mplstyle")  # fonts, colours, ticks
+fig, ax = plt.subplots(figsize=(2.85, 2.0))
+for name, y in series.items():
+    ax.errorbar(energy, y, yerr=3, label=name)
+ax.set_xlabel("Laser energy on target / J")
+fig.savefig("example-figure.pdf")
+\end{lstlisting}
+  \begin{itemize}
+    \item Size the figure for its slot; leave fonts and colours to the style
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Summary comes before the acknowledgements}
   \begin{enumerate}
     \item First conclusion, with its number

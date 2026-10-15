@@ -33,7 +33,7 @@ Typst package; `--check` fails if anything is out of date.
 | Sequential / diverging maps | viridis or cividis / RdBu or vik | Chosen |
 | Type | Source Sans 3 (semibold headings), fallback TeX Gyre Heros | Chosen over INFLPR's web font (Open Sans) |
 | Math | Source Sans 3 in figures (mathtext); Fira Math at 0.92 on slides, both themes | Done |
-| Code | Source Code Pro at 0.9 of the body size, both themes | Done |
+| Code | Source Code Pro at 0.9 of the body size; blocks at 0.8 on the tint, keywords primary, comments grey (Beamer `listings`) | Done |
 
 ## Layout as built
 
@@ -59,8 +59,9 @@ both sample decks).
   Sans maths and Typst warns, then uses New Computer Modern Math. Without Source Sans 3 both fall
   back to TeX Gyre Heros, which is wider, so slides reflow. Shipping the fonts in `assets/fonts/`
   is planned.
-- **Code blocks.** Typst code blocks sit on the tint; Beamer has no styled code block (use a
-  `block` around `verbatim` in a `[fragile]` frame).
+- **Syntax colours are minimal.** Code blocks colour only keywords (primary) and comments
+  (grey). Typst takes them from `cetal-code.tmTheme`, Beamer from `listings`; both use the tokens,
+  but the two highlighters split keywords differently, so a few words may differ.
 - **CETAL logo is a PNG only** (1022 × 621 px); fine for slides and the poster lockup, soft
   above about 5 cm tall. A vector original is still wanted.
 - **No Typst poster.** The A0 poster exists only as beamerposter.

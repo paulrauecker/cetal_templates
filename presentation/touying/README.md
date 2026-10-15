@@ -51,6 +51,7 @@ table and boxes, a figure slide, summary and acknowledgements.
 | `#table(.., table.header[..], table.hline(), ..)` | Tables get booktabs-style rules in the primary colour; `table.hline()` ends the header |
 | `#source-note[...]` | Small grey source line above the footer; works inside columns too |
 | `#closing-slide[funder logos]` | Acknowledgements with the `funding` text and contact, on the title slide's panel |
+| ` ```python ... ``` ` | Code block on the tint, keywords primary, comments grey (`assets/cetal-code.tmTheme`, generated from the tokens) |
 | `okabe-ito` | The data palette as an array, for CeTZ or Lilaq plots |
 | `#alert[...]` | Highlight in vermillion. `*bold*` stays dark (semibold), as in Beamer |
 

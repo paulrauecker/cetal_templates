@@ -336,6 +336,8 @@
   // but is much wider. Typst scales raw by a further 0.8, hence 1.125em. Blocks at 0.8.
   show raw: set text(font: code-font, size: 1.125em)
   show raw.where(block: true): set text(size: 1em)
+  // Syntax colours from the tokens: keywords primary, comments grey, the rest text colour.
+  set raw(theme: "assets/cetal-code.tmTheme")
   show raw.where(block: true): block.with(fill: cetal-tint, inset: 0.55em, width: 100%)
 
   show: touying-slides.with(

@@ -4,7 +4,7 @@
     python3 tools/sync_tokens.py --check   # exit 1 if anything is out of date (for CI or a hook)
 
 Generated regions sit between "<tokens>" and "</tokens>" marker comments; edit tokens.toml, not
-the regions. The style guide is only checked: every hex in tokens.toml must appear in it.
+the regions. The Typst code-highlighting theme (cetal-code.tmTheme) is generated whole. The style guide is only checked: every hex in tokens.toml must appear in it.
 """
 import re
 import shutil
@@ -19,6 +19,7 @@ BRAND, DATA = TOKENS["brand"], TOKENS["data"]
 STY = ROOT / "presentation/beamer/beamerthemeCETAL.sty"
 TYP = ROOT / "presentation/touying/lib.typ"
 MPL = ROOT / "presentation/beamer/cetal.mplstyle"
+CODE_THEME = ROOT / "presentation/touying/assets/cetal-code.tmTheme"
 GUIDE = ROOT / "CETAL Style Guide (Draft).md"
 # Copies kept so the Typst package is self-contained (typst init copies only the package).
 COPIES = {
@@ -56,6 +57,25 @@ def mpl_block():
             f"axes.prop_cycle    : cycler('color', [{cycle}])"]
 
 
+def code_theme():
+    """Syntax colours for Typst code blocks; the Beamer theme's \\lstset uses the same three."""
+    rules = [("Comments", "comment", BRAND["muted"]),
+             ("Keywords", "keyword.control, keyword.other, keyword.operator.word, keyword.operator.logical, storage, constant.language", BRAND["primary"])]
+    items = "".join(f"""
+    <dict><key>name</key><string>{n}</string><key>scope</key><string>{sc}</string>
+      <key>settings</key><dict><key>foreground</key><string>#{c}</string></dict></dict>""" for n, sc, c in rules)
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<!-- {NOTE} -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>name</key><string>CETAL</string>
+  <key>settings</key><array>
+    <dict><key>settings</key><dict><key>foreground</key><string>#{BRAND['text']}</string></dict></dict>{items}
+  </array>
+</dict></plist>
+"""
+
+
 def fill(path, comment, lines):
     text = path.read_text()
     pat = re.compile(rf"(^{re.escape(comment)} <tokens>[^\n]*\n).*?(^{re.escape(comment)} </tokens>)",
@@ -75,6 +95,10 @@ def main():
             stale.append(path)
             if not check:
                 path.write_text(new)
+    if not CODE_THEME.exists() or CODE_THEME.read_text() != code_theme():
+        stale.append(CODE_THEME)
+        if not check:
+            CODE_THEME.write_text(code_theme())
     for src, dst in COPIES.items():
         if not dst.exists() or dst.read_bytes() != src.read_bytes():
             stale.append(dst)

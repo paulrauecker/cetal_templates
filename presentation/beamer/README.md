@@ -41,6 +41,8 @@ panels), `cetaltext`, `cetalgrey`, `cetalrule` and `cetalalert`; the data palett
 - Tables: use booktabs (`\toprule`, `\midrule`, `\bottomrule`); the rules are drawn in the primary
   colour. No vertical rules.
 - `\alert{..}` for colour emphasis; `\textbf` stays dark.
+- Code: `\begin{lstlisting}[language=Python]` in a `[fragile]` frame gives a tint block,
+  keywords in the primary colour and comments grey (`listings`, set up by the theme).
 - `\url` is set in the primary colour; links made with `\href` are not coloured.
 - Section slides show the number ("01"); `\cetalsectionnumbersfalse` in the preamble turns that off.
 - The footer carries a light CETAL logo (`CETAL_Logo_blue_footer.png`, 50 % opacity) left of the

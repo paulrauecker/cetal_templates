@@ -63,6 +63,21 @@
 
 #source-note[Synthetic example data. Real sources: Author et al., _Journal_ *12*, 345 (2026).]
 
+== One style file sets fonts and colours for every figure
+
+```python
+import matplotlib.pyplot as plt
+
+plt.style.use("cetal.mplstyle")  # fonts, colours, ticks
+fig, ax = plt.subplots(figsize=(2.85, 2.0))
+for name, y in series.items():
+    ax.errorbar(energy, y, yerr=3, label=name)
+ax.set_xlabel("Laser energy on target / J")
+fig.savefig("example-figure.pdf")
+```
+
+- Size the figure for its slot; leave fonts and colours to the style
+
 == Summary comes before the acknowledgements
 
 + First conclusion, with its number

@@ -25,6 +25,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{booktabs}
 \RequirePackage{colortbl}
+\RequirePackage{listings}
 
 % ---------------------------------------------------------------- colours
 % Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, a 10 % tint of
@@ -96,6 +97,21 @@
 % ---------------------------------------------------------------- beamer setup
 \setbeamersize{text margin left=1.1cm, text margin right=1.1cm}
 \setbeamertemplate{navigation symbols}{}
+% Code blocks (lstlisting, in a [fragile] frame) as in the Typst theme: on the tint, 0.8 of the body
+% size, keywords primary, comments grey. Pick the language per block: [language=Python].
+\lstset{
+  basicstyle=\small\ttfamily\color{cetaltext},
+  keywordstyle=\color{cetalprimary},
+  commentstyle=\color{cetalgrey},
+  stringstyle=,
+  backgroundcolor=\color{cetaltint},
+  frame=single, framerule=0pt, rulecolor=\color{cetaltint},
+  framesep=0.55em, xleftmargin=0.55em, xrightmargin=0.55em,
+  aboveskip=0.6em, belowskip=0.6em,
+  columns=fullflexible, keepspaces=true, upquote=true,
+  showstringspaces=false, tabsize=4,
+}
+
 \beamer@centeredfalse % content starts below the title, as in the Typst theme; [c] per frame to centre
 \setbeamercolor{normal text}{fg=cetaltext,bg=white}
 \setbeamercolor{structure}{fg=cetalprimary}
