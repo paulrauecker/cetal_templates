@@ -212,7 +212,7 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 | Bold | Semibold, in the text colour. Colour emphasis only through alert (vermillion), and sparingly |
 | Box (Beamer `block`, Typst `panel`) | Tint panel, title semibold in the primary colour; the alert variant has a vermillion title |
 | Table | Horizontal rules only, in the primary colour (booktabs: top, below the header, bottom); header row semibold |
-| Lists | Primary triangles for bullets, grey dashes for sub-items; numbers in the primary colour |
+| Lists | The text font's own bullet (•) in the primary colour, grey dashes for sub-items; numbers in the primary colour |
 | Links | Primary colour, body font |
 | Captions | Grey, 9 pt, no "Figure 1" label |
 | Code | Source Code Pro on a tint panel at 0.8 of the body size; keywords in the primary colour, comments grey, everything else text colour |

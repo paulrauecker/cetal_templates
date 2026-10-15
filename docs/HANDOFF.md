@@ -50,7 +50,7 @@ Typst package; `--check` fails if anything is out of date.
 
 Positions on matching slides agree to within about 1 % of the page height (checked by rendering
 both sample decks).
-| Bullets | Small primary triangle | Same |
+| Bullets | Text font's bullet (•), primary colour | Same |
 | Lockup | INFLPR logo, thin grey rule, "CETAL" semibold primary | Same |
 
 ## Known rough edges

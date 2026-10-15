@@ -315,9 +315,8 @@
   // Bold is semibold, as in Beamer, and stays dark: emphasis in colour is `#alert[..]` only.
   set strong(delta: 200)
   set list(marker: (
-    // The body font's own small triangle (U+25B8), sized and centred on the lowercase letters by
-    // its designer; same as Beamer.
-    text(fill: cetal-primary, "\u{25B8}"),
+    // Typst's default bullet, i.e. the body font's own, in the primary colour; same as Beamer.
+    text(fill: cetal-primary, [•]),
     text(fill: cetal-muted, [–]),
   ))
   set enum(numbering: n => text(fill: cetal-primary)[#n.])
