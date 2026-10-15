@@ -9,7 +9,10 @@
 // The INFLPR and CETAL logos ship in assets/ and are used by default; override them with
 // `config-info(logo: ..)` and `cetal-logo:`.
 
-#import "@preview/touying:0.8.0": *
+// Pinned to Touying 0.7.4, the last release that runs on Typst 0.14 (0.8.0 needs Typst 0.15).
+// When moving to 0.8: register a `notes-fn`, give title/section/closing slides a hidden heading,
+// and keep the title-slide background off the notes half (Touying changelog, theme migration).
+#import "@preview/touying:0.7.4": *
 
 // ------------------------------------------------------------------ colours
 // Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, and a 10 % tint

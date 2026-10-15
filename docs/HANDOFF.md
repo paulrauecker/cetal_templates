@@ -73,7 +73,7 @@ python make_example_figure.py
 latexmk -xelatex cetal-slides-example.tex
 cd ../../poster && latexmk -xelatex cetal-poster.tex
 
-# Typst (needs Typst >= 0.15 for Touying 0.8.0; local install is 0.14.2 as of 2026-10-15)
+# Typst (Touying 0.7.4, Typst >= 0.14; 0.8.0 would need Typst 0.15, see presentation/touying/lib.typ)
 mkdir -p ~/.local/share/typst/packages/local/cetal-touying
 ln -s "$PWD/presentation/touying" ~/.local/share/typst/packages/local/cetal-touying/0.1.0
 typst init @local/cetal-touying:0.1.0 talk && cd talk && typst watch main.typ

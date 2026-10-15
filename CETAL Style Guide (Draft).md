@@ -182,7 +182,7 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 
 | Template | Files | Notes |
 | --- | --- | --- |
-| Typst slides | `cetal-touying` local package (Touying 0.8.0, Typst 0.15) | Start a talk with `typst init @local/cetal-touying:0.1.0`; reads the SVG logo directly |
+| Typst slides | `cetal-touying` local package (Touying 0.7.4, Typst 0.14) | Start a talk with `typst init @local/cetal-touying:0.1.0`; reads the SVG logo directly |
 | LaTeX slides | `beamerthemeCETAL.sty` with an example deck | Tested with XeLaTeX (LuaLaTeX untested); uses the logo converted to PDF (`inflpr-logo.pdf`) |
 | A0 poster | `cetal-poster.tex` | beamerposter, three columns, funder band and QR code |
 | Figures | `cetal.mplstyle` | Single-column defaults; slide sizes in Scientific figures |

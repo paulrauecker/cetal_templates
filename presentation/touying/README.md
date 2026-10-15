@@ -4,7 +4,12 @@ A [Touying](https://github.com/touying-typ/touying) slide theme for CETAL talks 
 draft CETAL Style Guide. It is the Typst counterpart of the Beamer theme in `../beamer/`.
 Unofficial until signed off.
 
-Tested with Typst 0.15.1 and Touying 0.8.0.
+Tested with Typst 0.14.2 and Touying 0.7.4. Touying 0.8.0 needs Typst 0.15, which stable
+distributions (e.g. NixOS 26.05) do not ship yet, so the theme stays on 0.7.4 for now.
+
+**Known Touying 0.7.x bug:** a `#pause` after `#uncover`, `#only` or `#alternatives` skips the
+subslides they reserve, so the next content appears one step late. Use an absolute jump there
+instead: after `#uncover("2")[..]`, write `#jump(2)` rather than `#pause`. Fixed in Touying 0.8.0.
 
 ## Install once, as a local package
 
