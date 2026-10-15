@@ -133,11 +133,14 @@
   \vskip-0.17cm{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\vskip-0.24cm}
 
 % Footer: short title . speaker . event       [CETAL logo]  n  (8.5 pt grey). The logo is the
-% light copy made by tools/make_footer_logo.py; it is left out if the file is missing.
+% light copy made by tools/make_footer_logo.py. The x-height of the "cetal" wordmark (centred 0.335
+% of the logo height above its bottom) is centred on the footer text's x-height (0.075 cm above the
+% baseline), so the wordmark and the slide number line up. Smashed so the footer height does not
+% change; left out if the file is missing.
 \newif\ifcetalfooterlogo \cetalfooterlogotrue
 \newcommand{\cetal@footerlogo}{%
   \IfFileExists{CETAL_Logo_blue_footer.png}%
-    {\raisebox{-0.11cm}{\includegraphics[height=0.4cm]{CETAL_Logo_blue_footer.png}}\hspace{0.3cm}}{}}
+    {\smash{\raisebox{-0.16cm}{\includegraphics[height=0.7cm]{CETAL_Logo_blue_footer.png}}}\hspace{0.3cm}}{}}
 \setbeamertemplate{footline}{%
   \leavevmode
   \hbox to\paperwidth{%
@@ -209,7 +212,7 @@
 % Source citation on a slide, 10 pt (style guide, Presentations)
 \newcommand{\slidecite}[1]{%
   \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=south west,inner sep=0pt,text width=0.8\paperwidth,font=\fontsize{9}{11}\selectfont,text=cetalgrey]
+    \node[anchor=south west,inner sep=0pt,text width=0.75\paperwidth,font=\fontsize{9}{11}\selectfont,text=cetalgrey]
       at ([xshift=1.1cm,yshift=0.8cm]current page.south west) {#1};
   \end{tikzpicture}}
 

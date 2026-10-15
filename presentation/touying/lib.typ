@@ -98,8 +98,12 @@
     (title, author, self.store.event).filter(x => x != none).join([ #sym.dot.c ]),
     {
       if logo != none {
-        set image(height: 0.74cm)
-        box(baseline: 0.2cm, logo)
+        // The "cetal" wordmark's x-height (centred 0.665 of the logo height below its top) is
+        // centred on the footer text's x-height (0.14 cm above the baseline), so the wordmark and
+        // the slide number line up. Zero height, so the footer keeps its size.
+        let size = 1.3cm
+        set image(height: size)
+        box(height: 0pt, baseline: 0pt, move(dy: -0.14cm - 0.665 * size, logo))
         h(0.56cm)
       }
       context utils.slide-counter.display()

@@ -41,7 +41,7 @@ Typst package; `--check` fails if anything is out of date.
 | Side margins | 1.1 cm | 2 cm |
 | Title slide | Top colour bar 0.18 cm, title `\huge`, lockup bottom left 0.9 cm | Bar 0.33 cm, title 1.9em, lockup 1.65 cm |
 | Content title | `\Large` semibold, primary, rule 1.2 cm × 1.2 pt; content top-aligned | 1.3em semibold, primary, rule 2.2 cm × 2.2 pt |
-| Footer | 8.5 pt grey: short title · speaker · event; CETAL logo (50 % opacity, 0.4 cm) and number right | 0.8em grey, same content; logo 0.74 cm |
+| Footer | 8.5 pt grey: short title · speaker · event; CETAL logo (50 % opacity, 0.7 cm, wordmark centred on the number) and number right | 0.8em grey, same content; logo 1.3 cm |
 | Section slide | "01" grey, title + rule, slightly above centre, not counted | Same |
 | Closing slide | Title-slide panel and lockup; acknowledgements, funding, contact | Same |
 | Boxes | `block`/`alertblock`/`exampleblock` on the tint | `#panel(title:, kind:)` |

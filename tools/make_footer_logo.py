@@ -15,7 +15,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets/logos/CETAL_Logo_blue.png"
 DST = ROOT / "assets/logos/CETAL_Logo_blue_footer.png"
-HEIGHT = 200  # px; enough for 0.75 cm at about 680 dpi
+HEIGHT = 240  # px; 0.7 cm on a Beamer slide at about 870 dpi
 
 opacity = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
 im = Image.open(SRC).convert("RGBA")
