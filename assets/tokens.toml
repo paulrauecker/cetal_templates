@@ -1,0 +1,23 @@
+# CETAL design tokens: the one place the colours are defined (style guide, Colour section).
+# After editing, run  python3 tools/sync_tokens.py  to update the Beamer theme, the Typst theme
+# and the matplotlib style. The style guide tables are checked, not rewritten.
+
+# Slide chrome and posters. Hex without "#".
+[brand]
+primary = "112C87" # the only fill in logo-principal.svg; titles, rules, bullets
+tint    = "E7EAF3" # 10 % of primary on white; panels
+text    = "1A1A1A" # body text, figure axes
+muted   = "6B6B6B" # footer, affiliations, captions
+rule    = "D0D0D0" # dividers, lockup rule, figure grids
+alert   = "D55E00" # Okabe-Ito vermillion; bold or large text only
+
+# Okabe-Ito data palette, in cycle order. Brand colours never encode data.
+[data]
+blue       = "0072B2"
+vermillion = "D55E00"
+green      = "009E73"
+orange     = "E69F00"
+purple     = "CC79A7"
+sky        = "56B4E9"
+yellow     = "F0E442" # fills and thick lines only
+black      = "1A1A1A" # dark text rather than pure black

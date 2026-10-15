@@ -5,6 +5,10 @@
 %   \usetheme{CETAL}
 %   \event{Group meeting, CETAL}          % shown in the footer and on the title slide
 %   \cetalfunding{This work was supported by ...}   % used by \cetalclosingframe
+%   \cetalcontact{name@inflpr.ro}                    % used by \cetalclosingframe
+%   \cetalsectionnumbersfalse                        % drop "01" above section titles
+%
+% Colours come from assets/tokens.toml; run tools/sync_tokens.py after changing them.
 %
 % Logos: inflpr-logo.pdf (the press-kit SVG converted with
 %   rsvg-convert -f pdf -o inflpr-logo.pdf logo-principal.svg) and CETAL_Logo_blue.png,
@@ -18,17 +22,20 @@
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
 \RequirePackage{xcolor}
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
 
 % ---------------------------------------------------------------- colours
-% Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, and a 10 % tint
-% of it for panels. Okabe--Ito vermillion is the only warm accent (alerts).
+% Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, a 10 % tint of
+% it for panels, neutral greys, and Okabe--Ito vermillion as the only warm accent (alerts).
+% Then the Okabe--Ito data palette (oiblue ... oiblack), in cycle order.
+% <tokens> generated from assets/tokens.toml by tools/sync_tokens.py; edit there
 \definecolor{cetalprimary}{HTML}{112C87}
 \definecolor{cetaltint}{HTML}{E7EAF3}
 \definecolor{cetaltext}{HTML}{1A1A1A}
 \definecolor{cetalgrey}{HTML}{6B6B6B}
 \definecolor{cetalrule}{HTML}{D0D0D0}
-
-% Okabe--Ito data palette (style guide, Colour section), in order
+\definecolor{cetalalert}{HTML}{D55E00}
 \definecolor{oiblue}{HTML}{0072B2}
 \definecolor{oivermillion}{HTML}{D55E00}
 \definecolor{oigreen}{HTML}{009E73}
@@ -36,6 +43,8 @@
 \definecolor{oipurple}{HTML}{CC79A7}
 \definecolor{oisky}{HTML}{56B4E9}
 \definecolor{oiyellow}{HTML}{F0E442}
+\definecolor{oiblack}{HTML}{1A1A1A}
+% </tokens>
 
 % ---------------------------------------------------------------- fonts
 \IfFontExistsTF{Source Sans 3}
@@ -76,31 +85,51 @@
 % ---------------------------------------------------------------- beamer setup
 \setbeamersize{text margin left=1.1cm, text margin right=1.1cm}
 \setbeamertemplate{navigation symbols}{}
+\beamer@centeredfalse % content starts below the title, as in the Typst theme; [c] per frame to centre
 \setbeamercolor{normal text}{fg=cetaltext,bg=white}
 \setbeamercolor{structure}{fg=cetalprimary}
 \setbeamercolor{frametitle}{fg=cetalprimary}
 \setbeamercolor{title}{fg=cetalprimary}
 \setbeamercolor{subtitle}{fg=cetaltext}
-\setbeamercolor{alerted text}{fg=oivermillion}
-\setbeamercolor{block title}{fg=cetalprimary,bg=}
-\setbeamercolor{block body}{fg=cetaltext,bg=}
+\setbeamercolor{alerted text}{fg=cetalalert}
 \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
 \setbeamerfont{title}{size=\huge,series=\bfseries}
-\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{subtitle}{size=\large,series=\mdseries}
 \setbeamertemplate{itemize items}{\color{cetalprimary}\raisebox{0.15ex}{\scriptsize$\blacktriangleright$}}
 \setbeamertemplate{itemize subitem}{\color{cetalgrey}--}
 \setbeamertemplate{enumerate items}[default]
+
+% Blocks: a tint panel, title in the heading weight. block = primary title, alertblock = alert
+% title, exampleblock = dark title. Same as panel() in the Typst theme.
 \setbeamertemplate{blocks}[default]
+\setbeamercolor{block title}{fg=cetalprimary,bg=cetaltint}
+\setbeamercolor{block body}{fg=cetaltext,bg=cetaltint}
+\setbeamercolor{block title alerted}{fg=cetalalert,bg=cetaltint}
+\setbeamercolor{block body alerted}{fg=cetaltext,bg=cetaltint}
+\setbeamercolor{block title example}{fg=cetaltext,bg=cetaltint}
+\setbeamercolor{block body example}{fg=cetaltext,bg=cetaltint}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+
+% Tables: booktabs rules (\toprule, \midrule, \bottomrule) in the primary colour, no vertical rules
+\arrayrulecolor{cetalprimary}
+
+% \url in the primary colour and the body font (Beamer makes many inserts internal links, so
+% colorlinks would recolour them too; for \href, colour the text yourself). Captions grey,
+% without a "Figure" label.
+\renewcommand{\UrlFont}{\color{cetalprimary}}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\setbeamercolor{caption}{fg=cetalgrey}
+\setbeamerfont{caption}{size=\footnotesize}
 
 % Frame title: one full-sentence message, left aligned, thin accent rule
 \setbeamertemplate{frametitle}{%
-  \vskip0.45cm
+  \vskip0.34cm
   \begin{beamercolorbox}[wd=\textwidth,left]{frametitle}%
     \usebeamerfont{frametitle}\insertframetitle
     \ifx\insertframesubtitle\@empty\else
       \par\vskip2pt{\usebeamerfont{framesubtitle}\color{cetalgrey}\normalsize\insertframesubtitle}\fi
   \end{beamercolorbox}%
-  \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\vskip2pt}
+  \vskip-0.17cm{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\vskip-0.24cm}
 
 % Footer: short title . speaker . event        n  (9 pt grey, no logo)
 \setbeamertemplate{footline}{%
@@ -115,50 +144,59 @@
     \hspace{1.1cm}}%
   \vskip0.35cm}
 
-% Title slide: title and meta on a tint panel, the lockup on a white strip below it
-\setbeamertemplate{title page}{%
+% Tint panel with the primary bar on top and the lockup on a white strip below it: the background
+% of the title and closing slides, so the talk opens and closes on the same frame.
+\newcommand{\cetal@panelbackground}{%
   \begin{tikzpicture}[remember picture,overlay]
     \fill[cetaltint] (current page.north west) rectangle ([yshift=2.6cm]current page.south east);
     \fill[cetalprimary] (current page.north west) rectangle ([yshift=-0.18cm]current page.north east);
     \node[anchor=south west,inner sep=0pt] at ([xshift=1.1cm,yshift=0.8cm]current page.south west) {\cetallockup[0.9cm]};
-  \end{tikzpicture}%
-  \vskip0.2cm
+  \end{tikzpicture}}
+
+% Title slide: title and meta on the panel
+\setbeamertemplate{title page}{%
+  \cetal@panelbackground
+  \vskip0.73cm
   \begin{minipage}{\textwidth}
     {\usebeamerfont{title}\usebeamercolor[fg]{title}\raggedright\inserttitle\par}
     \ifx\insertsubtitle\@empty\else
       \vskip0.25cm{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}\fi
     \vskip0.7cm
     {\normalsize\insertauthor\par}
-    \vskip0.15cm
+    \vskip-0.05cm
     {\small\color{cetalgrey}\insertinstitute\par}
-    \vskip0.45cm
+    \vskip0.19cm
     {\small\color{cetalgrey}\cetal@event\ifx\cetal@event\@empty\else\ \textperiodcentered\ \fi\insertdate\par}
   \end{minipage}
   \vskip2.3cm}
 
-% Section divider on the tint, same title and rule as content slides
+% Section divider on the tint: two-digit section number, then the title and the accent rule
+\newif\ifcetalsectionnumbers \cetalsectionnumberstrue
 \AtBeginSection[]{{%
   \setbeamercolor{background canvas}{bg=cetaltint}%
   \begin{frame}[plain,noframenumbering]
     \vfill
+    \ifcetalsectionnumbers
+      {\usebeamerfont{frametitle}\color{cetalgrey}\ifnum\value{section}<10 0\fi\arabic{section}\par}\vskip-0.05cm
+    \fi
     {\usebeamerfont{title}\color{cetalprimary}\insertsectionhead\par}
     \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}
     \vfill
   \end{frame}}}
 
-% Closing slide: funding acknowledgement, then contact (style guide, Presentations)
+% Closing slide on the same panel as the title slide: funding acknowledgement, optional funder
+% logos (#1), then contact (style guide, Presentations)
 \newcommand{\cetalclosingframe}[1][]{%
-  \begin{frame}[plain]
-    \vfill
+  \begin{frame}[plain,noframenumbering]
+    \cetal@panelbackground
+    \vskip0.46cm
     {\usebeamerfont{frametitle}\color{cetalprimary}Acknowledgements\par}
-    \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\par\vskip0.4cm
+    \vskip-0.09cm{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\par\vskip0.27cm
     {\small\cetal@funding\par}
     \ifx\relax#1\relax\else\vskip0.5cm\noindent#1\par\fi
     \vfill
     {\small\color{cetalgrey}\cetal@contact\par}
-    \vskip0.5cm
-    \cetallockup[0.75cm]
-    \vskip0.3cm
+    \vskip0.18cm
   \end{frame}}
 
 % Source citation on a slide, 10 pt (style guide, Presentations)

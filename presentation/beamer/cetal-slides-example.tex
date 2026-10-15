@@ -22,6 +22,33 @@
   \titlepage
 \end{frame}
 
+\section{Setup}
+
+\begin{frame}{Three probes sample the field at increasing distance}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{tabular}{lrr}
+        \toprule
+        \textbf{Probe} & \textbf{Distance / m} & \textbf{Band / GHz} \\
+        \midrule
+        A & 0.5 & 0.1--6 \\
+        B & 1.0 & 0.1--6 \\
+        C & 2.0 & 0.1--3 \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \begin{block}{Shots}
+        2--20\,J on target, 10 shots per energy, \textbf{same target type} throughout.
+      \end{block}
+      \begin{alertblock}{Caveat}
+        Probe C \alert{saturates} above 18\,J.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \slidecite{Synthetic example values.}
+\end{frame}
+
 \section{Results}
 
 \begin{frame}{Peak field grows linearly with energy on all three probes}

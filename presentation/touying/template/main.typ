@@ -23,6 +23,27 @@
 
 #title-slide()
 
+= Setup
+
+== Three probes sample the field at increasing distance
+
+// Two columns: one body per column, widths as in a grid.
+#slide(composer: (1fr, 0.9fr))[
+  #table(
+    columns: 3,
+    align: (left, right, right),
+    table.header[Probe][Distance / m][Band / GHz],
+    table.hline(),
+    [A], [0.5], [0.1–6],
+    [B], [1.0], [0.1–6],
+    [C], [2.0], [0.1–3],
+  )
+][
+  #panel(title: [Shots])[2–20 J on target, 10 shots per energy, *same target type* throughout.]
+  #panel(title: [Caveat], kind: "alert")[Probe C #alert[saturates] above 18 J.]
+  #source-note[Synthetic example values.]
+]
+
 = Results
 
 == Peak field grows linearly with energy on all three probes

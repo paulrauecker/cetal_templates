@@ -12,7 +12,14 @@ savefig.pad_inches : 0.02
 
 font.family        : sans-serif
 font.sans-serif    : Source Sans 3, TeX Gyre Heros, DejaVu Sans
-mathtext.fontset   : dejavusans
+# Maths in the text font, so symbols and units match the labels around them. Glyphs Source Sans 3
+# lacks (most operators, some Greek) come from STIX Sans. No LaTeX install needed.
+mathtext.fontset   : custom
+mathtext.rm        : Source Sans 3
+mathtext.it        : Source Sans 3:italic
+mathtext.bf        : Source Sans 3:weight=semibold
+mathtext.sf        : Source Sans 3
+mathtext.fallback  : stixsans
 font.size          : 8
 axes.labelsize     : 8
 axes.titlesize     : 8
@@ -21,8 +28,8 @@ ytick.labelsize    : 7
 legend.fontsize    : 7
 legend.frameon     : False
 
-axes.linewidth     : 0.6
-# Brand neutrals: dark text #1A1A1A instead of pure black, rules grey for grids (off by default)
+# Brand neutrals for everything that is not data; Okabe-Ito for the data.
+# <tokens> generated from assets/tokens.toml by tools/sync_tokens.py; edit there
 text.color         : 1A1A1A
 axes.edgecolor     : 1A1A1A
 axes.labelcolor    : 1A1A1A
@@ -30,8 +37,11 @@ xtick.color        : 1A1A1A
 ytick.color        : 1A1A1A
 legend.labelcolor  : 1A1A1A
 grid.color         : D0D0D0
-grid.linewidth     : 0.4
 axes.prop_cycle    : cycler('color', ['0072B2', 'D55E00', '009E73', 'E69F00', 'CC79A7', '56B4E9', 'F0E442', '1A1A1A'])
+# </tokens>
+grid.linewidth     : 0.4
+
+axes.linewidth     : 0.6
 lines.linewidth    : 1.0
 lines.markersize   : 3
 errorbar.capsize   : 1.5

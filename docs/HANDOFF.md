@@ -16,9 +16,9 @@ sources. Paths are relative to the repository root.
 
 ## Current design tokens
 
-These are defined separately in three places: `presentation/beamer/beamerthemeCETAL.sty`,
-`presentation/touying/lib.typ` and the two `cetal.mplstyle` copies (Beamer folder and
-`presentation/touying/tools/`). A change has to be made in all of them.
+Defined once in `assets/tokens.toml`. `python3 tools/sync_tokens.py` writes them into
+`beamerthemeCETAL.sty`, `lib.typ` and `cetal.mplstyle`, and copies the mplstyle and logos into the
+Typst package; `--check` fails if anything is out of date.
 
 | Token | Value | Status |
 | --- | --- | --- |
@@ -31,30 +31,32 @@ These are defined separately in three places: `presentation/beamer/beamerthemeCE
 | Data palette | Okabe–Ito, 8 colours, fixed order | Chosen, in the guide |
 | Sequential / diverging maps | viridis or cividis / RdBu or vik | Chosen |
 | Type | Source Sans 3 (semibold headings), fallback TeX Gyre Heros | Chosen; INFLPR web font unknown |
-| Math | Computer Modern (Beamer), New Computer Modern Math (Typst) | Default, not designed |
+| Math | Source Sans 3 in figures (mathtext); Computer Modern Sans (Beamer), New Computer Modern Math (Typst) on slides | Figures done; slides default |
 
 ## Layout as built
 
 | Element | Beamer (160 × 90 mm, 11 pt) | Touying (297 × 167 mm, 20 pt) |
 | --- | --- | --- |
 | Side margins | 1.1 cm | 2 cm |
-| Title slide | Top colour bar 0.18 cm, title `\huge`, lockup bottom left 0.9 cm | Bar 0.33 cm, title 1.9em, lockup 1.4 cm |
-| Content title | `\Large` semibold, primary, rule 1.2 cm × 1.2 pt | 1.3em semibold, primary, rule 2.2 cm × 1.5 pt |
-| Footer | 8.5 pt grey: short title · speaker · event, number right | 0.5em grey, same content |
-| Section slide | Title + rule, centred vertically, not counted | Same |
-| Closing slide | Acknowledgements, funding, contact, lockup | Same |
+| Title slide | Top colour bar 0.18 cm, title `\huge`, lockup bottom left 0.9 cm | Bar 0.33 cm, title 1.9em, lockup 1.65 cm |
+| Content title | `\Large` semibold, primary, rule 1.2 cm × 1.2 pt; content top-aligned | 1.3em semibold, primary, rule 2.2 cm × 2.2 pt |
+| Footer | 8.5 pt grey: short title · speaker · event, number right | 0.8em grey, same content |
+| Section slide | "01" grey, title + rule, slightly above centre, not counted | Same |
+| Closing slide | Title-slide panel and lockup; acknowledgements, funding, contact | Same |
+| Boxes | `block`/`alertblock`/`exampleblock` on the tint | `#panel(title:, kind:)` |
+| Tables | booktabs, rules in primary (`\arrayrulecolor`) | Same look; `table.hline()` after the header |
+
+Positions on matching slides agree to within about 1 % of the page height (checked by rendering
+both sample decks).
 | Bullets | Small primary triangle | Same |
 | Lockup | INFLPR logo, thin grey rule, "CETAL" semibold primary | Same |
 
 ## Known rough edges
 
-- **Three sources of truth for colours.** Worth replacing with one tokens file (e.g. TOML or JSON)
-  that generates the `.sty` colour block, the Typst constants and the mplstyle cycle.
-- **Mixed fonts in figures.** `cetal.mplstyle` sets `mathtext.fontset: dejavusans`, so figure maths
-  embeds DejaVu next to Source Sans 3 labels. Consider `mathtext.fontset: custom` with Source Sans 3.
-- **Serif maths on sans slides.** Neither theme picks a maths font deliberately.
-- **Bold text in Typst slides is vermillion.** Touying maps `*strong*` to `alert`, so the
-  bold volume number in a `source-note` reference turns orange.
+- **Maths on slides differs.** Beamer sets maths in Computer Modern Sans, Typst in serif New
+  Computer Modern Math. Neither is chosen deliberately.
+- **Code blocks.** Typst code blocks sit on the tint; Beamer has no styled code block (use a
+  `block` around `verbatim` in a `[fragile]` frame).
 - **CETAL logo is a PNG only** (1022 × 621 px); fine for slides and the poster lockup, soft
   above about 5 cm tall. A vector original is still wanted.
 - **No Typst poster.** The A0 poster exists only as beamerposter.
@@ -77,6 +79,9 @@ cd ../../poster && latexmk -xelatex cetal-poster.tex
 mkdir -p ~/.local/share/typst/packages/local/cetal-touying
 ln -s "$PWD/presentation/touying" ~/.local/share/typst/packages/local/cetal-touying/0.1.0
 typst init @local/cetal-touying:0.1.0 talk && cd talk && typst watch main.typ
+
+# Colours: edit assets/tokens.toml, then
+python3 tools/sync_tokens.py          # --check only reports
 
 # Look at the result
 pdftoppm -r 60 -png talk/main.pdf preview

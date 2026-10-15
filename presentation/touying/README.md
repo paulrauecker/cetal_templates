@@ -34,8 +34,8 @@ cd my-talk
 typst watch main.typ
 ```
 
-`main.typ` is a working example deck: title slide, section divider, a figure slide, summary and
-acknowledgements.
+`main.typ` is a working example deck: title slide, section dividers, a two-column slide with a
+table and boxes, a figure slide, summary and acknowledgements.
 
 ## What the theme gives you
 
@@ -43,21 +43,25 @@ acknowledgements.
 | --- | --- |
 | `cetal-theme.with(event:, short-author:, funding:, config-info(..))` | Sets fonts, colours, margins, footer and ISO dates |
 | `#title-slide()` | Title, subtitle, authors, institution, event · date, INFLPR \| CETAL lockup |
-| `= Section` | Section divider (not counted, no footer) |
+| `= Section` | Section divider with "01", "02" (not counted, no footer; `section-numbers: false` to drop the number) |
 | `== Sentence that states the message` | Content slide with the title and accent rule |
 | `#slide(title: none)[...]` | Content slide without a title block |
-| `#source-note[...]` | Small grey source line at the bottom of a slide |
-| `#closing-slide[funder logos]` | Acknowledgements with the `funding` text, contact, lockup |
+| `#slide(composer: (1fr, 1fr))[left][right]` | Two columns (after a `==` heading it keeps that title) |
+| `#panel(title: [..], kind: "alert")[...]` | Tint box, Beamer's block; `kind`: `"block"`, `"alert"`, `"example"` |
+| `#table(.., table.header[..], table.hline(), ..)` | Tables get booktabs-style rules in the primary colour; `table.hline()` ends the header |
+| `#source-note[...]` | Small grey source line above the footer; works inside columns too |
+| `#closing-slide[funder logos]` | Acknowledgements with the `funding` text and contact, on the title slide's panel |
 | `okabe-ito` | The data palette as an array, for CeTZ or Lilaq plots |
-| `#alert[...]` | Highlight in vermillion |
+| `#alert[...]` | Highlight in vermillion. `*bold*` stays dark (semibold), as in Beamer |
 
 ## Before real use
 
 1. **Logos.** The INFLPR logo (`logo-principal.svg`) and the blue CETAL logo ship in `assets/`
    and are used by default. Override them with `config-info(logo: image(..))` and
    `cetal-theme.with(cetal-logo: image(..))`; `none` draws a placeholder and the word "CETAL".
-2. **Brand colours.** `cetal-primary` (`#112C87`, the INFLPR logo blue) and `cetal-tint`
-   (`#E7EAF3`, for the title and section slide panels) are at the top of `lib.typ`.
+2. **Brand colours.** `cetal-primary` (`#112C87`, the INFLPR logo blue), `cetal-tint`
+   (`#E7EAF3`, the panels) and the greys are at the top of `lib.typ`, generated from the
+   repository's `assets/tokens.toml`. Change them there and run `python3 tools/sync_tokens.py`.
 3. **Font.** Install Source Sans 3 (SIL OFL, https://github.com/adobe-fonts/source-sans/releases),
    or compile with `typst compile --font-path fonts/ main.typ` and a `fonts/` folder.
    Without it the theme falls back to TeX Gyre Heros.

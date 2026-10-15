@@ -76,7 +76,7 @@ Use two palettes: brand colours for slide chrome and posters, and a colour-blind
 | Alert | #D55E00 | 3.9:1 | Highlights, bold or large text only |
 | Light background | #FFFFFF | — | Slides, posters |
 
-The templates define these as `cetalprimary` and `cetaltint` in beamerthemeCETAL.sty and `cetal-primary` and `cetal-tint` in the Typst theme.
+All colours are defined once, in `assets/tokens.toml`; `python3 tools/sync_tokens.py` writes them into the Beamer theme (`cetalprimary`, `cetaltint`, …), the Typst theme (`cetal-primary`, `cetal-tint`, …) and `cetal.mplstyle`. Its `--check` option fails if any copy is out of date.
 
 **Data palette.** Use the Okabe–Ito set for categorical data, in this order. It stays distinguishable for the common forms of colour blindness and in greyscale with marker changes.
 
@@ -142,6 +142,11 @@ figure.figsize     : 3.4, 2.6      # inches, single column
 figure.dpi         : 150
 savefig.dpi        : 600
 savefig.bbox       : tight
+mathtext.fontset   : custom          # maths in Source Sans 3, as the labels
+mathtext.rm        : Source Sans 3
+mathtext.it        : Source Sans 3:italic
+mathtext.bf        : Source Sans 3:weight=semibold
+mathtext.fallback  : stixsans
 font.size          : 8
 axes.labelsize     : 8
 xtick.labelsize    : 7
@@ -171,20 +176,44 @@ ps.fonttype        : 42
 
 `pdf.fonttype : 42` embeds TrueType fonts so text stays editable and passes journal checks.
 
+Matplotlib sets the maths itself (mathtext) in Source Sans 3, so no LaTeX install is needed and figures build the same on every machine. Keep `text.usetex` off: it needs LaTeX wherever the script runs, is slow, and sets serif maths next to sans labels. When a paper figure must match the document's fonts exactly, use the pgf backend instead, so the document's own LaTeX sets the figure text:
+
+```python
+import matplotlib as mpl
+mpl.use("pgf")
+mpl.rcParams.update({"pgf.texsystem": "xelatex", "pgf.rcfonts": False,
+                     "pgf.preamble": r"\usepackage{fontspec}\setsansfont{Source Sans 3}"})
+fig.savefig("figure.pdf")   # or "figure.pgf" to \input it in the document
+```
+
 ## Presentations
 
 Use 16:9 slides with a white background and the brand colour only for thin accents.
 
 **Title slide:** talk title, speaker names (presenter underlined), affiliation line in short form, event name and date (ISO, 2026-10-14), INFLPR logo bottom-left and CETAL wordmark beside it.
 
+**Section slides:** the tint background, a two-digit section number (01, 02) in grey, the section title and the accent rule. They are not counted in the slide numbers.
+
 **Content slides:**
 
 - Footer, 9–10 pt grey: short title · speaker · event · slide number. No logo on every slide.
+- Content starts below the title, not centred vertically.
 - One message per slide, written as the slide title in a full sentence ("EMP amplitude scales linearly with laser energy").
 - Figures at slide size (see Scientific figures), never pasted screenshots of paper figures with 6 pt text.
 - Cite sources on the slide in 10 pt: Author et al., *Journal* **vol**, page (year).
 
-**Closing slide:** funding acknowledgement with funder logos, then contact details. Put a summary slide before it, not after.
+**Slide elements** (the same in both templates):
+
+| Element | Style |
+| --- | --- |
+| Bold | Semibold, in the text colour. Colour emphasis only through alert (vermillion), and sparingly |
+| Box (Beamer `block`, Typst `panel`) | Tint panel, title semibold in the primary colour; the alert variant has a vermillion title |
+| Table | Horizontal rules only, in the primary colour (booktabs: top, below the header, bottom); header row semibold |
+| Lists | Primary triangles for bullets, grey dashes for sub-items; numbers in the primary colour |
+| Links | Primary colour, body font |
+| Captions | Grey, 9 pt, no "Figure 1" label |
+
+**Closing slide:** the same panel and lockup as the title slide, so the talk opens and closes on the same frame; funding acknowledgement with funder logos, then contact details. Put a summary slide before it, not after.
 
 **Templates (draft v0.1):**
 

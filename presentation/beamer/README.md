@@ -5,9 +5,9 @@ this theme. Unofficial until signed off.
 
 | File | What it is |
 | --- | --- |
-| `beamerthemeCETAL.sty` | Beamer theme: 16:9 slides, title slide with the INFLPR \| CETAL lockup, sentence-style frame titles, grey footer, `\cetalclosingframe` for acknowledgements |
+| `beamerthemeCETAL.sty` | Beamer theme: 16:9 slides, title slide with the INFLPR \| CETAL lockup, sentence-style frame titles, grey footer, numbered section slides, tint blocks, booktabs tables, `\cetalclosingframe` for acknowledgements |
 | `cetal-slides-example.tex` | Example deck using the theme |
-| `cetal.mplstyle` | Matplotlib defaults: single-column size, Okabe–Ito colours, viridis, embedded TrueType fonts |
+| `cetal.mplstyle` | Matplotlib defaults: single-column size, Okabe–Ito colours, brand greys for axes, maths in Source Sans 3, embedded TrueType fonts |
 | `make_example_figure.py` | Builds `example-figure.pdf` used by the slides and the poster (synthetic data) |
 
 ## Build
@@ -27,8 +27,21 @@ The lockup uses `inflpr-logo.pdf` (the press-kit SVG converted with
 elsewhere, copy the two logo files next to it; without them, a dashed placeholder and the word
 "CETAL" are drawn.
 
-Brand colours are `cetalprimary` (`#112C87`, the INFLPR logo blue) and `cetaltint` (`#E7EAF3`,
-a 10 % tint used for the title and section slide panels).
+Brand colours are `cetalprimary` (`#112C87`, the INFLPR logo blue), `cetaltint` (`#E7EAF3`, the
+panels), `cetaltext`, `cetalgrey`, `cetalrule` and `cetalalert`; the data palette is `oiblue` …
+`oiblack`. They come from `../../assets/tokens.toml`: edit that and run
+`python3 tools/sync_tokens.py` from the repository root, not the `.sty`.
+
+## Slide elements
+
+- Content is top-aligned (`\begin{frame}[c]` centres one frame).
+- `block`, `alertblock`, `exampleblock`: tint panels with a primary, vermillion or dark title.
+- Tables: use booktabs (`\toprule`, `\midrule`, `\bottomrule`); the rules are drawn in the primary
+  colour. No vertical rules.
+- `\alert{..}` for colour emphasis; `\textbf` stays dark.
+- `\url` is set in the primary colour; links made with `\href` are not coloured.
+- Section slides show the number ("01"); `\cetalsectionnumbersfalse` in the preamble turns that off.
+- `\cetalclosingframe[funder logos]` uses the title slide's panel and lockup.
 
 ## Funding line
 
