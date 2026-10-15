@@ -56,7 +56,7 @@
   }
   let cetal = self.store.cetal-logo
   let cetal-mark = if cetal == none {
-    text(size: 0.55 * height, weight: "semibold", fill: self.colors.primary)[CETAL]
+    text(size: 0.55 * height, font: self.store.heading-font, weight: "bold", fill: self.colors.primary)[CETAL]
   } else {
     set image(height: 1.6 * height)
     box(cetal)
@@ -75,7 +75,7 @@
 #let _accent-rule(self) = block(spacing: 0pt, line(length: 2.2cm, stroke: 2.2pt + self.colors.primary))
 
 #let _title-block(self, title) = {
-  block(below: 0.7em, { set par(leading: 0.35em); text(size: 1.3em, weight: "semibold", bottom-edge: "descender", fill: self.colors.primary, title) })
+  block(below: 0.7em, { set par(leading: 0.35em); text(size: 1.3em, font: self.store.heading-font, weight: "bold", bottom-edge: "descender", fill: self.colors.primary, title) })
   _accent-rule(self)
 }
 
@@ -127,7 +127,7 @@
   {
     if title != none {
       let fill = (block: cetal-primary, alert: cetal-alert, example: cetal-text).at(kind)
-      block(below: 0.65em, text(weight: "semibold", fill: fill, title))
+      block(below: 0.65em, text(weight: "bold", fill: fill, title))
     }
     body
   },
@@ -197,7 +197,7 @@
   let body = {
     set text(fill: self.colors.neutral-darkest)
     v(0.6cm)
-    block(spacing: 0pt, { set par(leading: 0.45em); text(size: 1.9em, weight: "semibold", fill: self.colors.primary, info.title) })
+    block(spacing: 0pt, { set par(leading: 0.45em); text(size: 1.9em, font: self.store.heading-font, weight: "bold", fill: self.colors.primary, info.title) })
     if info.at("subtitle", default: none) != none {
       block(above: 1.1em, text(size: 1.1em, info.subtitle))
     }
@@ -233,14 +233,15 @@
         if h != none {
           // Touying keeps headings from stepping counter(heading), so count them instead.
           let n = query(heading.where(level: level).before(h.location())).len()
-          block(below: 0.95em, text(size: 1.3em, weight: "semibold", fill: self.colors.neutral-dark,
+          block(below: 0.95em, text(size: 1.3em, font: self.store.heading-font, weight: "bold", fill: self.colors.neutral-dark,
             (if n < 10 { "0" } else { "" }) + str(n)))
         }
       }
     }
     block(below: 0.55em, text(
       size: 1.9em,
-      weight: "semibold",
+      font: self.store.heading-font,
+      weight: "bold",
       bottom-edge: "descender",
       fill: self.colors.primary,
       utils.display-current-heading(level: level, numbered: numbered),
@@ -287,10 +288,12 @@
 /// - funding (content, none): Default acknowledgement text for `closing-slide`.
 /// - cetal-logo (content, none): CETAL mark for the lockup; `none` writes "CETAL" instead.
 /// - footer-logo (content, none): Light CETAL logo in the footer of content slides; `none` drops it.
-/// - font (str, array): Body font with fallbacks. Source Sans 3 is open licence (SIL OFL).
-/// - math-font (str, array): Maths font. Fira Math is a sans maths font (SIL OFL) that matches
-///   the body; it is scaled to the body's x-height. Typst warns if it is not installed.
-/// - code-font (str, array): Code font, Source Code Pro (SIL OFL), at the body's x-height.
+/// - font (str, array): Body font with fallbacks. IBM Plex Sans is open licence (SIL OFL).
+/// - heading-font (str, array): Font for slide, section and title-slide titles, in bold.
+///   TeX Gyre Adventor (GUST licence, ships with TeX Live) is a free Avant Garde Gothic.
+/// - math-font (str, array): Maths font. IBM Plex Math (SIL OFL) shares the body's x-height,
+///   so it needs no scaling. Typst warns if it is not installed.
+/// - code-font (str, array): Code font, IBM Plex Mono (SIL OFL).
 /// - align (alignment): Vertical alignment of slide bodies. Default `top`.
 /// - section-numbers (bool): Show "01", "02" above section titles. Default `true`.
 #let cetal-theme(
@@ -301,9 +304,10 @@
   funding: none,
   cetal-logo: image("assets/CETAL_Logo_blue.png"),
   footer-logo: image("assets/CETAL_Logo_blue_footer.png"),
-  font: ("Source Sans 3", "TeX Gyre Heros"),
-  math-font: ("Fira Math", "New Computer Modern Math"),
-  code-font: ("Source Code Pro", "DejaVu Sans Mono"),
+  font: ("IBM Plex Sans", "Source Sans 3", "TeX Gyre Heros"),
+  heading-font: ("TeX Gyre Adventor", "IBM Plex Sans", "Source Sans 3"),
+  math-font: ("IBM Plex Math", "Fira Math", "New Computer Modern Math"),
+  code-font: ("IBM Plex Mono", "Source Code Pro", "DejaVu Sans Mono"),
   lang: "en",
   margin-x: 2cm,
   section-numbers: true,
@@ -312,8 +316,9 @@
 ) = {
   set text(size: 20pt, font: font, lang: lang)
   set par(justify: false)
-  // Bold is semibold, as in Beamer, and stays dark: emphasis in colour is `#alert[..]` only.
-  set strong(delta: 200)
+  // Bold is the font's Bold (700), as in Beamer, and stays dark: emphasis in colour is
+  // `#alert[..]` only. Not SemiBold: Plex installs often list it as a separate family.
+  set strong(delta: 300)
   set list(marker: (
     // Typst's default bullet, i.e. the body font's own, in the primary colour; same as Beamer.
     text(fill: cetal-primary, [•]),
@@ -325,16 +330,15 @@
   set figure(numbering: none)
   show figure.caption: set text(size: 0.85em, fill: cetal-muted)
   // Tables: booktabs-style rules in the primary colour, no vertical rules. Mark the end of the
-  // header with `table.hline()`, like \midrule; header row in semibold.
+  // header with `table.hline()`, like \midrule; header row in bold.
   set table(stroke: none, inset: (x: 0.5em, y: 0.3em), align: left)
   set table.hline(stroke: 0.05em + cetal-primary)
-  show table.cell.where(y: 0): set text(weight: "semibold")
+  show table.cell.where(y: 0): set text(weight: "bold")
   show table: it => box(stroke: (y: 0.08em + cetal-primary), inset: (y: 0.15em), it)
-  // Sans maths, so equations match the text and the figures. Fira Math has a larger x-height
-  // than Source Sans 3 (0.527 vs 0.486 em); 0.92em lines them up.
-  show math.equation: set text(font: math-font, size: 0.92em)
-  // Code at 0.9 of the body size, as in Beamer: Source Code Pro shares Source Sans 3's x-height
-  // but is much wider. Typst scales raw by a further 0.8, hence 1.125em. Blocks at 0.8.
+  // Maths in IBM Plex Math, the body's own family: same x-height, so no scaling.
+  show math.equation: set text(font: math-font)
+  // Code at 0.9 of the body size, as in Beamer: IBM Plex Mono shares Plex Sans's x-height but is
+  // much wider. Typst scales raw by a further 0.8, hence 1.125em. Blocks at 0.8.
   show raw: set text(font: code-font, size: 1.125em)
   show raw.where(block: true): set text(size: 1em)
   // Syntax colours from the tokens: keywords primary, comments grey, the rest text colour.
@@ -367,6 +371,7 @@
     config-store(
       align: align,
       event: event,
+      heading-font: heading-font,
       short-author: short-author,
       funding: funding,
       cetal-logo: cetal-logo,

@@ -99,15 +99,16 @@ Use free, open-licence fonts with full Romanian diacritics (ș, ț with comma be
 
 | Context | Typeface | Notes |
 | --- | --- | --- |
-| Slides and posters | Source Sans 3 | Headings semibold; body regular |
-| Maths on slides and posters | Fira Math | Sans maths that matches Source Sans 3; scaled to 92 % so the x-heights match |
+| Titles and headings on slides and posters | TeX Gyre Adventor Bold | A free Avant Garde Gothic; ships with TeX Live |
+| Slide and poster text | IBM Plex Sans | Regular (400) for body, Bold for emphasis; not Light or Condensed, which wash out on projectors |
+| Maths on slides and posters | IBM Plex Math | Same x-height as Plex Sans, so no scaling |
 | Reports and long documents | Source Serif 4, or LaTeX defaults | Body 10–11 pt |
 | Figures | Same as the target document | Match the journal's text font when known |
-| Code and paths | Source Code Pro | At 90 % of the body size, which matches it optically |
+| Code and paths | IBM Plex Mono | At 90 % of the body size, which matches it optically |
 
-INFLPR's website uses Open Sans, with Raleway for some headings. The templates keep Source Sans 3: it is narrower, so dense slides fit more text at the same size, and it holds up better at title sizes. Both are open-licence humanist sans faces, so slides and the website do not clash.
+INFLPR's website uses Open Sans, with Raleway for some headings. The templates pair a geometric title face with a technical text face instead: Adventor's round, wide capitals echo the CETAL wordmark, and IBM Plex has a text, maths and code font from one design, with clear 0/O and I/l/1. Plex is wider than Source Sans 3, the previous text font, so keep bullets short.
 
-Figures set their maths in Source Sans 3 itself (see Scientific figures), slides in Fira Math. Both are sans, so a figure and the equation next to it read as one style.
+Figures use the same fonts (see Scientific figures): labels in Plex Sans, maths upright in Plex Math with variables in Plex Serif Italic, which matches Plex Math's italic. A figure and the equation next to it read as one style.
 
 In LaTeX, load the fonts through `fontspec` (LuaLaTeX or XeLaTeX), or keep Computer Modern for journal submissions. Do not substitute Arial or Calibri in shared templates, since they are not available on Linux nodes.
 
@@ -145,11 +146,13 @@ figure.figsize     : 3.4, 2.6      # inches, single column
 figure.dpi         : 150
 savefig.dpi        : 600
 savefig.bbox       : tight
-mathtext.fontset   : custom          # maths in Source Sans 3, as the labels
-mathtext.rm        : Source Sans 3
-mathtext.it        : Source Sans 3:italic
-mathtext.bf        : Source Sans 3:weight=semibold
-mathtext.fallback  : stixsans
+font.sans-serif    : IBM Plex Sans, Source Sans 3, TeX Gyre Heros, DejaVu Sans
+mathtext.fontset   : custom          # maths as on the slides
+mathtext.rm        : IBM Plex Math
+mathtext.it        : IBM Plex Serif:italic
+mathtext.bf        : IBM Plex Serif:bold
+mathtext.sf        : IBM Plex Sans
+mathtext.fallback  : stix
 font.size          : 8
 axes.labelsize     : 8
 xtick.labelsize    : 7
@@ -179,13 +182,13 @@ ps.fonttype        : 42
 
 `pdf.fonttype : 42` embeds TrueType fonts so text stays editable and passes journal checks.
 
-Matplotlib sets the maths itself (mathtext) in Source Sans 3, so no LaTeX install is needed and figures build the same on every machine. Keep `text.usetex` off: it needs LaTeX wherever the script runs, is slow, and sets serif maths next to sans labels. When a paper figure must match the document's fonts exactly, use the pgf backend instead, so the document's own LaTeX sets the figure text:
+Matplotlib sets the maths itself (mathtext) in the Plex fonts, so no LaTeX install is needed and figures build the same on every machine. Keep `text.usetex` off: it needs LaTeX wherever the script runs, is slow, and sets Computer Modern maths that matches nothing else. When a paper figure must match the document's fonts exactly, use the pgf backend instead, so the document's own LaTeX sets the figure text:
 
 ```python
 import matplotlib as mpl
 mpl.use("pgf")
 mpl.rcParams.update({"pgf.texsystem": "xelatex", "pgf.rcfonts": False,
-                     "pgf.preamble": r"\usepackage{fontspec}\setsansfont{Source Sans 3}"})
+                     "pgf.preamble": r"\usepackage{fontspec}\setsansfont{IBM Plex Sans}"})
 fig.savefig("figure.pdf")   # or "figure.pgf" to \input it in the document
 ```
 
@@ -209,13 +212,13 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 
 | Element | Style |
 | --- | --- |
-| Bold | Semibold, in the text colour. Colour emphasis only through alert (vermillion), and sparingly |
-| Box (Beamer `block`, Typst `panel`) | Tint panel, title semibold in the primary colour; the alert variant has a vermillion title |
-| Table | Horizontal rules only, in the primary colour (booktabs: top, below the header, bottom); header row semibold |
+| Bold | Bold, in the text colour. Colour emphasis only through alert (vermillion), and sparingly |
+| Box (Beamer `block`, Typst `panel`) | Tint panel, title bold in the primary colour; the alert variant has a vermillion title |
+| Table | Horizontal rules only, in the primary colour (booktabs: top, below the header, bottom); header row bold |
 | Lists | The text font's own bullet (•) in the primary colour, grey dashes for sub-items; numbers in the primary colour |
 | Links | Primary colour, body font |
 | Captions | Grey, 9 pt, no "Figure 1" label |
-| Code | Source Code Pro on a tint panel at 0.8 of the body size; keywords in the primary colour, comments grey, everything else text colour |
+| Code | IBM Plex Mono on a tint panel at 0.8 of the body size; keywords in the primary colour, comments grey, everything else text colour |
 
 **Closing slide:** the same panel and lockup as the title slide, so the talk opens and closes on the same frame; funding acknowledgement with funder logos, then contact details. Put a summary slide before it, not after.
 
@@ -228,7 +231,7 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 | A0 poster | `cetal-poster.tex` | beamerposter, three columns, funder band and QR code |
 | Figures | `cetal.mplstyle` | Single-column defaults; slide sizes in Scientific figures |
 
-All templates use Source Sans 3 when installed, TeX Gyre Heros otherwise, and use the INFLPR and CETAL logos from the repository's `assets/logos/` (the Typst package ships its own copy); they draw a placeholder if the logo files are missing. Keep them in one shared repository so everyone uses the same version. No PowerPoint/Impress template exists yet.
+All templates use TeX Gyre Adventor for titles and IBM Plex for text, maths and code when installed, falling back to Source Sans 3 or TeX Gyre Heros, and use the INFLPR and CETAL logos from the repository's `assets/logos/` (the Typst package ships its own copy); they draw a placeholder if the logo files are missing. Keep them in one shared repository so everyone uses the same version. No PowerPoint/Impress template exists yet.
 
 ## Posters
 

@@ -53,7 +53,7 @@ table and boxes, a figure slide, summary and acknowledgements.
 | `#closing-slide[funder logos]` | Acknowledgements with the `funding` text and contact, on the title slide's panel |
 | ` ```python ... ``` ` | Code block on the tint, keywords primary, comments grey (`assets/cetal-code.tmTheme`, generated from the tokens) |
 | `okabe-ito` | The data palette as an array, for CeTZ or Lilaq plots |
-| `#alert[...]` | Highlight in vermillion. `*bold*` stays dark (semibold), as in Beamer |
+| `#alert[...]` | Highlight in vermillion. `*bold*` stays dark (Plex Bold), as in Beamer |
 
 ## Before real use
 
@@ -63,12 +63,15 @@ table and boxes, a figure slide, summary and acknowledgements.
 2. **Brand colours.** `cetal-primary` (`#112C87`, the INFLPR logo blue), `cetal-tint`
    (`#E7EAF3`, the panels) and the greys are at the top of `lib.typ`, generated from the
    repository's `assets/tokens.toml`. Change them there and run `python3 tools/sync_tokens.py`.
-3. **Fonts.** Install Source Sans 3 (https://github.com/adobe-fonts/source-sans/releases),
-   Fira Math (https://github.com/firamath/firamath/releases) and Source Code Pro
-   (https://github.com/adobe-fonts/source-code-pro/releases), all SIL OFL, or put them in a
-   `fonts/` folder and compile with `typst compile --font-path fonts/ main.typ`. Without them the
-   theme falls back to TeX Gyre Heros, New Computer Modern Math and DejaVu Sans Mono, and Typst
-   warns about the missing ones. Change them with `font:`, `math-font:` and `code-font:`.
+3. **Fonts.** Install IBM Plex Sans, Plex Math and Plex Mono
+   (https://github.com/IBM/plex/releases, SIL OFL) and TeX Gyre Adventor for titles
+   (https://www.gust.org.pl/projects/e-foundry/tex-gyre/adventor, GUST licence; TeX Live has it,
+   but Typst does not look there), or put them in a `fonts/` folder and compile with
+   `typst compile --font-path fonts/ main.typ`. With TeX Live, `--font-path
+   "$(kpsewhich -var-value TEXMFDIST)/fonts/opentype/public/tex-gyre"` finds Adventor. Without
+   them the theme falls back to Plex Sans for titles, then Source Sans 3 and TeX Gyre Heros, and
+   Typst warns about the missing ones. Change them with `font:`, `heading-font:`, `math-font:`
+   and `code-font:`.
 
 ## Figures
 

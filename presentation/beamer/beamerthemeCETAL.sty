@@ -49,21 +49,33 @@
 % </tokens>
 
 % ---------------------------------------------------------------- fonts
-\IfFontExistsTF{Source Sans 3}
-  {\setsansfont{Source Sans 3}[BoldFont={* Semibold}]}
-  {\setsansfont{TeX Gyre Heros}}
-% Code at 0.9 of the body size: Source Code Pro shares Source Sans 3's x-height but is much wider,
+% IBM Plex for text, maths and code (SIL OFL); titles in TeX Gyre Adventor Bold, a free Avant
+% Garde Gothic. TeX Live ships all of them; they are loaded by file name, so XeLaTeX finds them
+% without a system install. Fallbacks: Source Sans 3, TeX Gyre Heros.
+% Bold is Plex Bold, not SemiBold, to match the Typst theme.
+\IfFontExistsTF{IBMPlexSans-Regular.otf}
+  {\setsansfont{IBMPlexSans}[Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+     ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic]}
+  {\IfFontExistsTF{Source Sans 3}
+    {\setsansfont{Source Sans 3}[BoldFont={* Semibold}]}
+    {\setsansfont{TeX Gyre Heros}}}
+\IfFontExistsTF{texgyreadventor-regular.otf}
+  {\newfontfamily\cetaltitlefont{texgyreadventor}[Extension=.otf, UprightFont=*-regular,
+     BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]}
+  {\newcommand\cetaltitlefont{\sffamily}}
+% Code at 0.9 of the body size: IBM Plex Mono shares Plex Sans's x-height but is much wider,
 % so at full size it looks too big.
-\IfFontExistsTF{Source Code Pro}
-  {\setmonofont{Source Code Pro}[Scale=0.9]}
+\IfFontExistsTF{IBMPlexMono-Regular.otf}
+  {\setmonofont{IBMPlexMono}[Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+     ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, Scale=0.9]}
   {}
-% Sans maths, so equations match the text and the figures. Fira Math has a larger x-height than
-% Source Sans 3 (0.527 vs 0.486 em), hence the scale. Without it, Beamer's default sans maths.
-\IfFontExistsTF{Fira Math}
+% Maths in IBM Plex Math, the text's own family: same x-height, so no scaling. Without it,
+% Beamer's default sans maths.
+\IfFontExistsTF{IBMPlexMath-Regular.otf}
   {\usefonttheme{professionalfonts}
    \RequirePackage{unicode-math}
-   \setmathfont{Fira Math}[Scale=0.92]
-   \setmathrm{Fira Math}[Scale=0.92]}% \mathrm too, else it is the roman text font (Latin Modern)
+   \setmathfont{IBMPlexMath-Regular.otf}
+   \setmathrm{IBMPlexMath-Regular.otf}}% \mathrm too, else it is the roman text font (Latin Modern)
   {}
 
 % ---------------------------------------------------------------- metadata
@@ -85,7 +97,7 @@
 \newcommand{\cetal@cetallogo}[1]{%
   \IfFileExists{CETAL_Logo_blue.png}%
     {\includegraphics[height=#1]{CETAL_Logo_blue.png}}%
-    {\raisebox{0.28\dimexpr#1\relax}{\fontsize{0.55\dimexpr#1\relax}{0.6\dimexpr#1\relax}\selectfont\bfseries\color{cetalprimary}CETAL}}}
+    {\raisebox{0.28\dimexpr#1\relax}{\cetaltitlefont\fontsize{0.55\dimexpr#1\relax}{0.6\dimexpr#1\relax}\selectfont\bfseries\color{cetalprimary}CETAL}}}
 
 % "INFLPR logo | CETAL logo" lockup (style guide, Logos section). #1 is the INFLPR logo height;
 % the CETAL mark is drawn taller so both read at the same visual weight.
@@ -119,9 +131,10 @@
 \setbeamercolor{title}{fg=cetalprimary}
 \setbeamercolor{subtitle}{fg=cetaltext}
 \setbeamercolor{alerted text}{fg=cetalalert}
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
-\setbeamerfont{title}{size=\huge,series=\bfseries}
-\setbeamerfont{subtitle}{size=\large,series=\mdseries}
+\setbeamerfont{frametitle}{size=\Large,family=\cetaltitlefont,series=\bfseries}
+\setbeamerfont{title}{size=\huge,family=\cetaltitlefont,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large,family=\sffamily,series=\mdseries}
+\setbeamerfont{framesubtitle}{family=\sffamily,series=\mdseries}
 % Bullet: the text font's own bullet, sized and placed by its designer, in the primary colour.
 \setbeamertemplate{itemize items}{\color{cetalprimary}\textbullet}
 \setbeamertemplate{itemize subitem}{\color{cetalgrey}--}
@@ -200,7 +213,7 @@
       \vskip0.25cm{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}\fi
     \vskip0.7cm
     {\normalsize\insertauthor\par}
-    \vskip-0.05cm
+    \vskip0.08cm
     {\small\color{cetalgrey}\insertinstitute\par}
     \vskip0.19cm
     {\small\color{cetalgrey}\cetal@event\ifx\cetal@event\@empty\else\ \textperiodcentered\ \fi\insertdate\par}

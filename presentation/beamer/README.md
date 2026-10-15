@@ -7,7 +7,7 @@ this theme. Unofficial until signed off.
 | --- | --- |
 | `beamerthemeCETAL.sty` | Beamer theme: 16:9 slides, title slide with the INFLPR \| CETAL lockup, sentence-style frame titles, grey footer, numbered section slides, tint blocks, booktabs tables, `\cetalclosingframe` for acknowledgements |
 | `cetal-slides-example.tex` | Example deck using the theme |
-| `cetal.mplstyle` | Matplotlib defaults: single-column size, Okabe–Ito colours, brand greys for axes, maths in Source Sans 3, embedded TrueType fonts |
+| `cetal.mplstyle` | Matplotlib defaults: single-column size, Okabe–Ito colours, brand greys for axes, labels in IBM Plex Sans, maths in Plex Math and Plex Serif Italic, embedded TrueType fonts |
 | `make_example_figure.py` | Builds `example-figure.pdf` used by the slides and the poster (synthetic data) |
 
 ## Build
@@ -17,9 +17,10 @@ python make_example_figure.py
 latexmk -xelatex cetal-slides-example.tex
 ```
 
-LuaLaTeX works too. Fonts, all SIL OFL: Source Sans 3 for text (otherwise TeX Gyre Heros, which ships
-with TeX Live), Fira Math for maths through `unicode-math` (otherwise Beamer's sans maths) and
-Source Code Pro for code. Fira Math is on CTAN as `firamath`.
+LuaLaTeX works too. Fonts: TeX Gyre Adventor Bold for titles; IBM Plex Sans for text, IBM Plex Math for
+maths through `unicode-math` and IBM Plex Mono for code (SIL OFL). TeX Live ships all of them and the
+theme loads them by file name, so nothing needs installing. Without them: Source Sans 3 or TeX Gyre
+Heros for text, Beamer's sans maths.
 
 ## Logos and colours
 

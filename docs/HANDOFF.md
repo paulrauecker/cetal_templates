@@ -31,9 +31,9 @@ Typst package; `--check` fails if anything is out of date.
 | Alert | `#D55E00` (Okabe–Ito vermillion) | Chosen |
 | Data palette | Okabe–Ito, 8 colours, fixed order | Chosen, in the guide |
 | Sequential / diverging maps | viridis or cividis / RdBu or vik | Chosen |
-| Type | Source Sans 3 (semibold headings), fallback TeX Gyre Heros | Chosen over INFLPR's web font (Open Sans) |
-| Math | Source Sans 3 in figures (mathtext); Fira Math at 0.92 on slides, both themes | Done |
-| Code | Source Code Pro at 0.9 of the body size; blocks at 0.8 on the tint, keywords primary, comments grey (Beamer `listings`) | Done |
+| Type | Titles TeX Gyre Adventor Bold; text IBM Plex Sans Regular, Bold for emphasis; fallbacks Source Sans 3, TeX Gyre Heros | Chosen over INFLPR's web font (Open Sans) and the earlier Source Sans 3 |
+| Math | IBM Plex Math on slides, both themes, no scaling; figures: Plex Math upright, Plex Serif Italic variables (mathtext) | Done |
+| Code | IBM Plex Mono at 0.9 of the body size; blocks at 0.8 on the tint, keywords primary, comments grey (Beamer `listings`) | Done |
 
 ## Layout as built
 
@@ -41,7 +41,7 @@ Typst package; `--check` fails if anything is out of date.
 | --- | --- | --- |
 | Side margins | 1.1 cm | 2 cm |
 | Title slide | Top colour bar 0.18 cm, title `\huge`, lockup bottom left 0.9 cm | Bar 0.33 cm, title 1.9em, lockup 1.65 cm |
-| Content title | `\Large` semibold, primary, rule 1.2 cm × 1.2 pt; content top-aligned | 1.3em semibold, primary, rule 2.2 cm × 2.2 pt |
+| Content title | `\Large` Adventor Bold, primary, rule 1.2 cm × 1.2 pt; content top-aligned | 1.3em Adventor Bold, primary, rule 2.2 cm × 2.2 pt |
 | Footer | 8.5 pt grey: short title · speaker · event; CETAL logo (50 % opacity, 0.7 cm, wordmark centred on the number) and number right | 0.8em grey, same content; logo 1.3 cm |
 | Section slide | "01" grey, title + rule, slightly above centre, not counted | Same |
 | Closing slide | Title-slide panel and lockup; acknowledgements, funding, contact | Same |
@@ -51,13 +51,17 @@ Typst package; `--check` fails if anything is out of date.
 Positions on matching slides agree to within about 1 % of the page height (checked by rendering
 both sample decks).
 | Bullets | Text font's bullet (•), primary colour | Same |
-| Lockup | INFLPR logo, thin grey rule, "CETAL" semibold primary | Same |
+| Lockup | INFLPR logo, thin grey rule, "CETAL" bold primary | Same |
 
 ## Known rough edges
 
-- **Fonts must be installed.** Without Fira Math, Beamer silently falls back to Computer Modern
-  Sans maths and Typst warns, then uses New Computer Modern Math. Without Source Sans 3 both fall
-  back to TeX Gyre Heros, which is wider, so slides reflow. Shipping the fonts in `assets/fonts/`
+- **Fonts must be installed.** Without IBM Plex Math, Beamer silently falls back to Computer
+  Modern Sans maths and Typst warns, then uses Fira Math or New Computer Modern Math. Without IBM
+  Plex Sans both fall back to Source Sans 3, then TeX Gyre Heros, so slides reflow. Beamer loads
+  Plex and Adventor from TeX Live by file name, so it needs nothing installed; Typst does not
+  search TeX Live, so it needs them installed or on `--font-path`, else titles fall back to Plex
+  Sans. Plex SemiBold is
+  not used: many installs list it as a separate family, so bold is Plex Bold. Shipping the fonts in `assets/fonts/`
   is planned.
 - **Syntax colours are minimal.** Code blocks colour only keywords (primary) and comments
   (grey). Typst takes them from `cetal-code.tmTheme`, Beamer from `listings`; both use the tokens,

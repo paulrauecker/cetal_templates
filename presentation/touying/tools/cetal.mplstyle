@@ -11,15 +11,15 @@ savefig.bbox       : tight
 savefig.pad_inches : 0.02
 
 font.family        : sans-serif
-font.sans-serif    : Source Sans 3, TeX Gyre Heros, DejaVu Sans
-# Maths in the text font, so symbols and units match the labels around them. Glyphs Source Sans 3
-# lacks (most operators, some Greek) come from STIX Sans. No LaTeX install needed.
+font.sans-serif    : IBM Plex Sans, Source Sans 3, TeX Gyre Heros, DejaVu Sans
+# Maths as on the slides: upright in IBM Plex Math, variables in IBM Plex Serif Italic (Plex Math
+# has no separate italic font for mathtext to use). Missing glyphs come from STIX. No LaTeX needed.
 mathtext.fontset   : custom
-mathtext.rm        : Source Sans 3
-mathtext.it        : Source Sans 3:italic
-mathtext.bf        : Source Sans 3:weight=semibold
-mathtext.sf        : Source Sans 3
-mathtext.fallback  : stixsans
+mathtext.rm        : IBM Plex Math
+mathtext.it        : IBM Plex Serif:italic
+mathtext.bf        : IBM Plex Serif:bold
+mathtext.sf        : IBM Plex Sans
+mathtext.fallback  : stix
 font.size          : 8
 axes.labelsize     : 8
 axes.titlesize     : 8
