@@ -4,15 +4,18 @@
 // content slides, INFLPR | CETAL lockup on the title and closing slides.
 //
 //   #import "@local/cetal-touying:0.1.0": *
-//   #show: cetal-theme.with(event: [Group meeting], config-info(title: [...], logo: image("inflpr-logo.svg")))
+//   #show: cetal-theme.with(event: [Group meeting], config-info(title: [...]))
+//
+// The INFLPR and CETAL logos ship in assets/ and are used by default; override them with
+// `config-info(logo: ..)` and `cetal-logo:`.
 
 #import "@preview/touying:0.8.0": *
 
 // ------------------------------------------------------------------ colours
-// PLACEHOLDER brand colours: replace with the fill values from the INFLPR press-kit file
-// logo-principal.svg:  grep -oE '#[0-9A-Fa-f]{6}' logo-principal.svg | sort | uniq -c | sort -rn
-#let cetal-primary = rgb("#1F3A5F") // PLACEHOLDER
-#let cetal-secondary = rgb("#0072B2") // PLACEHOLDER
+// Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, and a 10 % tint
+// of it for panels. Okabe–Ito vermillion is the only warm accent (alerts).
+#let cetal-primary = rgb("#112C87")
+#let cetal-tint = rgb("#E7EAF3")
 
 /// Okabe–Ito data palette, in the order the style guide uses (Colour section).
 /// Yellow (index 6) is for fills and thick lines only.
@@ -35,21 +38,29 @@
   align(center + horizon, text(size: 0.22 * height, fill: luma(107))[INFLPR logo]),
 )
 
-/// The INFLPR | CETAL lockup (style guide, Logos). Uses `config-info(logo: image(...))`
-/// when given, otherwise a labelled placeholder of the same footprint.
+/// The INFLPR | CETAL lockup (style guide, Logos). `height` is the INFLPR logo height; the
+/// CETAL mark is drawn taller so both read at the same visual weight. `logo: none` draws a
+/// labelled placeholder, `cetal-logo: none` the word "CETAL".
 #let cetal-lockup(self, height: 1.4cm) = {
   let logo = self.info.at("logo", default: none)
   let mark = if logo == none { _logo-placeholder(height) } else {
     set image(height: height)
     box(logo)
   }
+  let cetal = self.store.cetal-logo
+  let cetal-mark = if cetal == none {
+    text(size: 0.55 * height, weight: "semibold", fill: self.colors.primary)[CETAL]
+  } else {
+    set image(height: 1.6 * height)
+    box(cetal)
+  }
   grid(
     columns: 3,
-    column-gutter: 0.3 * height,
+    column-gutter: 0.45 * height,
     align: horizon,
     mark,
-    line(angle: 90deg, length: height, stroke: 0.6pt + self.colors.neutral-light),
-    text(size: 0.55 * height, weight: "semibold", fill: self.colors.primary)[CETAL],
+    line(angle: 90deg, length: 1.6 * height, stroke: 0.6pt + self.colors.neutral-light),
+    cetal-mark,
   )
 }
 
@@ -123,15 +134,18 @@
   )
 })
 
-/// Title slide: title, subtitle, authors (underline the presenter), institution,
-/// event · date, and the INFLPR | CETAL lockup at bottom left.
+/// Title slide: title, subtitle, authors (underline the presenter), institution and
+/// event · date on a tint panel, and the INFLPR | CETAL lockup on a white strip below it.
 #let title-slide(config: (:), ..args) = touying-slide-wrapper(self => {
   self = utils.merge-dicts(
     self,
     config-common(freeze-slide-counter: true),
     config-page(
       footer: none,
-      background: place(top, rect(width: 100%, height: 0.33cm, fill: self.colors.primary)),
+      background: {
+        place(top, rect(width: 100%, height: 100% - 4.6cm, fill: self.colors.secondary))
+        place(top, rect(width: 100%, height: 0.33cm, fill: self.colors.primary))
+      },
     ),
     config,
   )
@@ -158,12 +172,12 @@
   touying-slide(self: self, body)
 })
 
-/// Section divider: the section title and the accent rule, no footer, not counted.
+/// Section divider on the tint: the section title and the accent rule, no footer, not counted.
 #let new-section-slide(config: (:), level: 1, numbered: false, body) = touying-slide-wrapper(self => {
   self = utils.merge-dicts(
     self,
     config-common(freeze-slide-counter: true),
-    config-page(footer: none),
+    config-page(footer: none, fill: self.colors.secondary),
   )
   let setting(body) = {
     set std.align(horizon)
@@ -209,6 +223,7 @@
 /// - event (content, none): Event name for the title slide and footer, e.g. `[Group meeting]`.
 /// - short-author (content, auto): Speaker for the footer; `auto` uses `config-info(author: ..)`.
 /// - funding (content, none): Default acknowledgement text for `closing-slide`.
+/// - cetal-logo (content, none): CETAL mark for the lockup; `none` writes "CETAL" instead.
 /// - font (str, array): Body font with fallbacks. Source Sans 3 is open licence (SIL OFL).
 /// - align (alignment): Vertical alignment of slide bodies. Default `top`.
 #let cetal-theme(
@@ -217,6 +232,7 @@
   event: none,
   short-author: auto,
   funding: none,
+  cetal-logo: image("assets/CETAL_Logo_blue.png"),
   font: ("Source Sans 3", "TeX Gyre Heros"),
   lang: "en",
   margin-x: 2cm,
@@ -240,10 +256,11 @@
       new-section-slide-fn: new-section-slide,
       datetime-format: "[year]-[month]-[day]",
     ),
+    config-info(logo: image("assets/logo-principal.svg")),
     config-methods(alert: (self: none, it) => text(fill: okabe-ito.at(1), it)),
     config-colors(
       primary: cetal-primary,
-      secondary: cetal-secondary,
+      secondary: cetal-tint, // panels: title slide, section slides
       neutral-lightest: white,
       neutral-light: rgb("#D0D0D0"),
       neutral-dark: rgb("#6B6B6B"),
@@ -254,6 +271,7 @@
       event: event,
       short-author: short-author,
       funding: funding,
+      cetal-logo: cetal-logo,
       margin-x: margin-x,
     ),
     ..args,

@@ -5,6 +5,7 @@
 \usepackage[orientation=portrait,size=a0,scale=1.0]{beamerposter}
 \usetheme{CETAL}
 \usepackage{qrcode}
+\usetikzlibrary{tikzmark}
 
 % Poster chrome: no slide footline, generous margins
 \setbeamertemplate{footline}{}
@@ -25,7 +26,9 @@
 \begin{document}
 \begin{frame}[t]
 \begin{tikzpicture}[remember picture,overlay]
-  % thin brand bar across the top
+  % title band on the tint, down to the mark set after the affiliations (needs a second run),
+  % then a thin brand bar across the top
+  \fill[cetaltint] (current page.north west) rectangle (current page.east |- {pic cs:bandend});
   \fill[cetalprimary] (current page.north west) rectangle ([yshift=-0.8cm]current page.north east);
 \end{tikzpicture}
 \vspace{2.2cm}
@@ -33,18 +36,18 @@
 \hspace{2.75cm}%
 \begin{minipage}[t]{\dimexpr\paperwidth-5.5cm\relax}
   % ------------------------------------------------------------ title band
-  \begin{minipage}[t]{0.70\linewidth}
-    {\postertitle\color{cetalprimary}Title of the poster, stating the main result\par}
-    \vspace{1cm}
-    {\posterauthors\underline{Presenter Name}\textsuperscript{1}, Co-author Name\textsuperscript{1,2}\par}
-    \vspace{0.5cm}
-    {\postersmall\color{cetalgrey}
-      \textsuperscript{1}Center for Advanced Laser Technologies (CETAL), National Institute for Laser, Plasma and Radiation Physics (INFLPR), 409 Atomiștilor Street, 077125 Măgurele, Ilfov, Romania\\
-      \textsuperscript{2}Second affiliation\par}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.27\linewidth}\raggedleft
-    \cetallockup[3.2cm]
-  \end{minipage}
+  \vspace{1.2cm}
+  \cetallockup[2.6cm]\par
+  \vspace{2.2cm}
+  {\postertitle\color{cetalprimary}Title of the poster, stating the main result\par}
+  \vspace{1cm}
+  {\posterauthors\underline{Presenter Name}\textsuperscript{1}, Co-author Name\textsuperscript{1,2}\par}
+  \vspace{0.5cm}
+  {\postersmall\color{cetalgrey}
+    \textsuperscript{1}Center for Advanced Laser Technologies (CETAL), National Institute for Laser, Plasma and Radiation Physics (INFLPR), 409 Atomiștilor Street, 077125 Măgurele, Ilfov, Romania\\
+    \textsuperscript{2}Second affiliation\par}
+  \vspace{1.4cm}
+  \tikzmark{bandend}\par
 
   \vspace{1.6cm}
   % ------------------------------------------------------------ key result

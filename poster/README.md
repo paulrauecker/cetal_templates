@@ -10,11 +10,12 @@ A0 portrait poster: three columns, funder band and QR code. It is built on the B
 latexmk -xelatex cetal-poster.tex
 ```
 
-`latexmkrc` adds `../presentation/beamer/` to `TEXINPUTS`, so the theme, the example figure and
-`inflpr-logo.pdf` are found there. Without latexmk, set it by hand:
+`latexmkrc` adds `../presentation/beamer/` and `../assets/logos/` to `TEXINPUTS`, so the theme,
+the example figure and both logos are found there. Without latexmk, set it by hand (XeLaTeX twice,
+because the tint band behind the title is sized from the first run):
 
 ```
-TEXINPUTS=../presentation/beamer//: xelatex cetal-poster.tex
+TEXINPUTS=../presentation/beamer//:../assets/logos//: xelatex cetal-poster.tex
 ```
 
-Logo, brand colours and the funding line: see `../presentation/beamer/README.md`.
+Logos, brand colours and the funding line: see `../presentation/beamer/README.md`.

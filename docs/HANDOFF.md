@@ -22,8 +22,8 @@ These are defined separately in three places: `presentation/beamer/beamerthemeCE
 
 | Token | Value | Status |
 | --- | --- | --- |
-| Primary | `#1F3A5F` (navy) | **Placeholder**; logo SVG gives `#112C87` |
-| Secondary | `#0072B2` | **Placeholder**; currently barely used |
+| Primary | `#112C87` (INFLPR logo blue) | Applied |
+| Tint (was secondary) | `#E7EAF3` (10 % primary) | Applied: title slide, section slides, poster title band |
 | Text | `#1A1A1A` | Chosen |
 | Muted text (footer, institution, captions) | `#6B6B6B` | Chosen; 5.3:1 on white |
 | Rules / dividers | `#D0D0D0` | Chosen |
@@ -48,16 +48,15 @@ These are defined separately in three places: `presentation/beamer/beamerthemeCE
 
 ## Known rough edges
 
-- **Brand colours are placeholders.** The logo is now in `assets/logos/`; its only colour is
-  `#112C87`. The palette and the whole look will shift once it is applied.
 - **Three sources of truth for colours.** Worth replacing with one tokens file (e.g. TOML or JSON)
   that generates the `.sty` colour block, the Typst constants and the mplstyle cycle.
 - **Mixed fonts in figures.** `cetal.mplstyle` sets `mathtext.fontset: dejavusans`, so figure maths
   embeds DejaVu next to Source Sans 3 labels. Consider `mathtext.fontset: custom` with Source Sans 3.
 - **Serif maths on sans slides.** Neither theme picks a maths font deliberately.
-- **Secondary colour has no job.** Either give it one (links, highlights) or drop it.
-- **Title slide is plain.** Large white field between the meta block and the lockup; the
-  subtitle sits close to a two-line title in Typst.
+- **Bold text in Typst slides is vermillion.** Touying maps `*strong*` to `alert`, so the
+  bold volume number in a `source-note` reference turns orange.
+- **CETAL logo is a PNG only** (1022 × 621 px); fine for slides and the poster lockup, soft
+  above about 5 cm tall. A vector original is still wanted.
 - **No Typst poster.** The A0 poster exists only as beamerposter.
 - **The style guide has no visuals.** Palette swatches, a slide anatomy diagram and a do/don't
   logo panel would help readers.
@@ -98,7 +97,6 @@ theme pads it back by `margin-x`; keep that if the footer is redesigned.
 
 ## Still open (outside the aesthetic work)
 
-- Brand colours from the logo SVG (value found: `#112C87`; not yet applied)
 - Core Programme project code
 - Internal affiliation policy (SMI, intranet only)
 - Reply from press@inflpr.ro (email drafted, not yet sent)

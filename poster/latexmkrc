@@ -1,2 +1,2 @@
-# Find beamerthemeCETAL.sty, example-figure.pdf and inflpr-logo.pdf in the Beamer folder
-ensure_path('TEXINPUTS', '../presentation/beamer//');
+# Find beamerthemeCETAL.sty and example-figure.pdf in the Beamer folder, and the logos
+ensure_path('TEXINPUTS', '../presentation/beamer//', '../assets/logos//');

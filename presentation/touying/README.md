@@ -48,17 +48,11 @@ acknowledgements.
 
 ## Before real use
 
-1. **Logo.** Copy `logo-principal.svg` (INFLPR press kit, https://inflpr.ro/kit-de-presa/) from
-   `assets/logos/` in this repository next to `main.typ`, and uncomment
-   `logo: image("logo-principal.svg")`. Typst reads SVG directly, so no conversion is needed.
-   Without it, a dashed placeholder is drawn.
-2. **Brand colours.** `cetal-primary` and `cetal-secondary` at the top of `lib.typ` are
-   placeholders. Read the real values from the logo:
-
-   ```
-   grep -oE '#[0-9A-Fa-f]{6}' logo-principal.svg | sort | uniq -c | sort -rn
-   ```
-
+1. **Logos.** The INFLPR logo (`logo-principal.svg`) and the blue CETAL logo ship in `assets/`
+   and are used by default. Override them with `config-info(logo: image(..))` and
+   `cetal-theme.with(cetal-logo: image(..))`; `none` draws a placeholder and the word "CETAL".
+2. **Brand colours.** `cetal-primary` (`#112C87`, the INFLPR logo blue) and `cetal-tint`
+   (`#E7EAF3`, for the title and section slide panels) are at the top of `lib.typ`.
 3. **Font.** Install Source Sans 3 (SIL OFL, https://github.com/adobe-fonts/source-sans/releases),
    or compile with `typst compile --font-path fonts/ main.typ` and a `fonts/` folder.
    Without it the theme falls back to TeX Gyre Heros.

@@ -16,8 +16,8 @@
     institution: [CETAL, National Institute for Laser, Plasma and Radiation Physics (INFLPR), Măgurele, Romania],
     date: datetime(year: 2026, month: 10, day: 15),
     contact: [presenter\@inflpr.ro #h(0.8em) · #h(0.8em) cetal.inflpr.ro],
-    // Drop the press-kit file next to this one and uncomment (Typst reads SVG directly):
-    // logo: image("logo-principal.svg"),
+    // The INFLPR and CETAL logos come with the theme. To use other files:
+    // logo: image("my-logo.svg"),   and   cetal-logo: image(..)  next to `event:`
   ),
 )
 

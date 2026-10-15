@@ -1,0 +1,2 @@
+# Find the INFLPR and CETAL logos in assets/logos
+ensure_path('TEXINPUTS', '../../assets/logos//');

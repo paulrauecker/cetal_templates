@@ -19,25 +19,16 @@ latexmk -xelatex cetal-slides-example.tex
 
 LuaLaTeX works too. Fonts: Source Sans 3 if installed, otherwise TeX Gyre Heros (ships with TeX Live).
 
-## Two things to do before real use
+## Logos and colours
 
-1. **Logo.** `logo-principal.svg` from the INFLPR press kit (https://inflpr.ro/kit-de-presa/) is in
-   `assets/logos/`. Convert it next to the theme:
+The lockup uses `inflpr-logo.pdf` (the press-kit SVG converted with
+`rsvg-convert -f pdf -o inflpr-logo.pdf logo-principal.svg`) and `CETAL_Logo_blue.png`, both in
+`../../assets/logos/`. `latexmkrc` puts that folder on `TEXINPUTS`. If you copy the theme
+elsewhere, copy the two logo files next to it; without them, a dashed placeholder and the word
+"CETAL" are drawn.
 
-   ```
-   rsvg-convert -f pdf -o inflpr-logo.pdf ../../assets/logos/logo-principal.svg
-   ```
-
-   Until `inflpr-logo.pdf` exists, a dashed placeholder box is drawn.
-
-2. **Brand colours.** `cetalprimary` and `cetalsecondary` in `beamerthemeCETAL.sty` are placeholders.
-   Read the real values from the logo and replace them:
-
-   ```
-   grep -oE '#[0-9A-Fa-f]{6}' ../../assets/logos/logo-principal.svg | sort | uniq -c | sort -rn
-   ```
-
-   Colours may also be given as `rgb(...)` or in a `<style>` block; check the file if grep finds nothing.
+Brand colours are `cetalprimary` (`#112C87`, the INFLPR logo blue) and `cetaltint` (`#E7EAF3`,
+a 10 % tint used for the title and section slide panels).
 
 ## Funding line
 

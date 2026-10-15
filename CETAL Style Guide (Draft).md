@@ -50,7 +50,7 @@ Use only the official INFLPR vector files from the press kit, and never redraw, 
 | Secondary | [logo-secundar.svg](https://inflpr.ro/wp-content/uploads/2025/01/logo-secundar.svg) | *TBC:* likely the compact or alternate lockup |
 | Tertiary | [logo-tertiar.svg](https://inflpr.ro/wp-content/uploads/2025/01/logo-tertiar.svg) | *TBC:* likely the mark alone, for small sizes |
 
-**CETAL lockup.** CETAL has no published logo: neither cetal.inflpr.ro nor the CETAL page on inflpr.ro carries one, and the press kit offers only INFLPR marks. Use a text lockup instead: the INFLPR logo, a thin vertical rule, then "CETAL" in the heading typeface and primary brand colour. The slide and poster templates draw this lockup with `\cetallockup`.
+**CETAL lockup.** The CETAL logo (swoosh, "cetal" wordmark and star) is not in the press kit and carries no fixed brand colour; the CETAL website shows it in white. The original file is dark red (#640000). For the templates it is recoloured to the INFLPR blue (#112C87), keeping its gradients, so the two marks read as one family. The lockup is the INFLPR logo, a thin vertical rule, then the CETAL logo at 1.6 times the INFLPR logo height so both carry the same visual weight. Without the CETAL file, the templates write "CETAL" in the heading typeface and primary colour instead. The slide and poster templates draw this lockup with `\cetallockup` (LaTeX) and `cetal-lockup` (Typst). The CETAL logo exists only as a 1022 × 621 px PNG, which is enough up to about 5 cm tall in print; ask for a vector original before using it larger.
 
 **Rules (proposed):**
 
@@ -64,20 +64,19 @@ Use only the official INFLPR vector files from the press kit, and never redraw, 
 
 Use two palettes: brand colours for slide chrome and posters, and a colour-blind-safe palette for data.
 
-**Brand colours (TBC).** Take these from the `fill` values in logo-principal.svg, not from screenshots. The file could not be read from here, so run this on any machine with the downloaded logo and fill the table:
+**Brand colours.** The scheme is one blue, neutral greys and one warm accent. The blue is the only fill in logo-principal.svg; the tint is 10 % of it on white. No second brand hue is used: the CETAL logo's red would compete with the vermillion alert and the vermillion data series.
 
-```
-grep -oE '#[0-9A-Fa-f]{6}' logo-principal.svg | sort | uniq -c | sort -rn
-```
+| Role | Hex | Contrast on white | Use |
+| --- | --- | --- | --- |
+| Primary | #112C87 | 12.1:1 | Title bar, headings, accent rules, bullets |
+| Tint | #E7EAF3 | — | Panels: title slide, section slides, poster title band |
+| Dark text | #1A1A1A | 17.4:1 | Body text |
+| Muted text | #6B6B6B | 5.3:1 | Footer, affiliations, captions (4.4:1 on the tint, so keep it short there) |
+| Rules | #D0D0D0 | — | Dividers, the rule in the lockup |
+| Alert | #D55E00 | 3.9:1 | Highlights, bold or large text only |
+| Light background | #FFFFFF | — | Slides, posters |
 
-The templates define both brand colours once, as `cetalprimary` and `cetalsecondary` in beamerthemeCETAL.sty, currently set to placeholders.
-
-| Role | Hex | Use |
-| --- | --- | --- |
-| Primary | *from SVG* | Title bars, headings, accent lines |
-| Secondary | *from SVG* | Highlights, links |
-| Dark text | #1A1A1A | Body text on light backgrounds |
-| Light background | #FFFFFF | Slides, posters |
+The templates define these as `cetalprimary` and `cetaltint` in beamerthemeCETAL.sty and `cetal-primary` and `cetal-tint` in the Typst theme.
 
 **Data palette.** Use the Okabe–Ito set for categorical data, in this order. It stays distinguishable for the common forms of colour blindness and in greyscale with marker changes.
 
@@ -92,7 +91,7 @@ The templates define both brand colours once, as `cetalprimary` and `cetalsecond
 | 7 | Yellow | #F0E442 |
 | 8 | Black | #000000 |
 
-Yellow is for fills and thick lines only, never thin lines or text on white. Brand colours never encode data.
+Yellow is for fills and thick lines only, never thin lines or text on white. Brand colours never encode data; the first data colour (#0072B2) is a lighter, brighter blue than the primary, so do not swap one for the other.
 
 ## Typography
 
@@ -184,11 +183,11 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 | Template | Files | Notes |
 | --- | --- | --- |
 | Typst slides | `cetal-touying` local package (Touying 0.8.0, Typst 0.15) | Start a talk with `typst init @local/cetal-touying:0.1.0`; reads the SVG logo directly |
-| LaTeX slides | `beamerthemeCETAL.sty` with an example deck | Tested with XeLaTeX (LuaLaTeX untested); needs the logo converted to PDF |
+| LaTeX slides | `beamerthemeCETAL.sty` with an example deck | Tested with XeLaTeX (LuaLaTeX untested); uses the logo converted to PDF (`inflpr-logo.pdf`) |
 | A0 poster | `cetal-poster.tex` | beamerposter, three columns, funder band and QR code |
 | Figures | `cetal.mplstyle` | Single-column defaults; slide sizes in Scientific figures |
 
-All templates use Source Sans 3 when installed, TeX Gyre Heros otherwise, and draw a placeholder until the INFLPR logo is added. Keep them in one shared repository so everyone uses the same version. No PowerPoint/Impress template exists yet.
+All templates use Source Sans 3 when installed, TeX Gyre Heros otherwise, and use the INFLPR and CETAL logos from the repository's `assets/logos/` (the Typst package ships its own copy); they draw a placeholder if the logo files are missing. Keep them in one shared repository so everyone uses the same version. No PowerPoint/Impress template exists yet.
 
 ## Posters
 
@@ -276,14 +275,15 @@ Name files so they sort by date and say what they are: `YYYY-MM-DD_project_descr
 
 ## Open items
 
-Five items are resolved; the rest need someone with an INFLPR login, the logo file, or authority to decide.
+Six items are resolved; the rest need someone with an INFLPR login, the logo file, or authority to decide.
 
 - [x] Check the public SMI documents for templates: none found; only the affiliation policy and internal procedures are listed
-- [x] Decide the CETAL lockup: no CETAL logo exists publicly, so the guide uses a text lockup
+- [x] Decide the CETAL lockup: INFLPR logo, rule, CETAL logo recoloured to the INFLPR blue
 - [x] Confirm laboratory names: CETAL-PW, CETAL-LaMP, CETAL-PhIL, and the CETAL 1 PW laser
 - [x] Find the Core Programme: LAPLAS VII, contract 30N/2023
 - [x] Build the Beamer theme, A0 poster template and matplotlib style
-- [ ] Extract the brand hex colours from logo-principal.svg (one command, in Colour)
+- [x] Extract the brand hex colours from logo-principal.svg: one fill, #112C87
+- [ ] Get a vector original of the CETAL logo
 - [ ] Confirm the Core Programme project code (PN 23 01 vs PN-23 03 01)
 - [ ] Read the institutional affiliation policy (internal) and align the affiliation line
 - [ ] Check the intranet and calitate.inflpr.ro for internal templates

@@ -6,9 +6,10 @@
 %   \event{Group meeting, CETAL}          % shown in the footer and on the title slide
 %   \cetalfunding{This work was supported by ...}   % used by \cetalclosingframe
 %
-% Logo: put the INFLPR logo next to the .tex file as  inflpr-logo.pdf
-%   (convert the press-kit SVG: rsvg-convert -f pdf -o inflpr-logo.pdf logo-principal.svg)
-% Until it exists, a labelled placeholder box is drawn instead.
+% Logos: inflpr-logo.pdf (the press-kit SVG converted with
+%   rsvg-convert -f pdf -o inflpr-logo.pdf logo-principal.svg) and CETAL_Logo_blue.png,
+% both in assets/logos/. latexmkrc puts that folder on TEXINPUTS. Without them, a labelled
+% placeholder box and the word "CETAL" are drawn instead.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerthemeCETAL}[2026/10/14 v0.1 draft CETAL Beamer theme]
@@ -19,10 +20,10 @@
 \RequirePackage{xcolor}
 
 % ---------------------------------------------------------------- colours
-% PLACEHOLDER brand colours: replace with the fill values from the INFLPR
-% press-kit file logo-principal.svg  (grep -oE '#[0-9A-Fa-f]{6}' logo-principal.svg | sort | uniq -c)
-\definecolor{cetalprimary}{HTML}{1F3A5F}   % PLACEHOLDER
-\definecolor{cetalsecondary}{HTML}{0072B2} % PLACEHOLDER
+% Brand colours: one blue, from the only fill in the INFLPR logo-principal.svg, and a 10 % tint
+% of it for panels. Okabe--Ito vermillion is the only warm accent (alerts).
+\definecolor{cetalprimary}{HTML}{112C87}
+\definecolor{cetaltint}{HTML}{E7EAF3}
 \definecolor{cetaltext}{HTML}{1A1A1A}
 \definecolor{cetalgrey}{HTML}{6B6B6B}
 \definecolor{cetalrule}{HTML}{D0D0D0}
@@ -59,11 +60,18 @@
     {\tikz\draw[cetalgrey,dashed]
        (0,0) rectangle node[font=\tiny,text=cetalgrey]{INFLPR logo} (2.6*#1,#1);}}
 
-% "INFLPR logo | CETAL" lockup (style guide, Logos section)
+% CETAL logo, or the word "CETAL" in the heading face
+\newcommand{\cetal@cetallogo}[1]{%
+  \IfFileExists{CETAL_Logo_blue.png}%
+    {\includegraphics[height=#1]{CETAL_Logo_blue.png}}%
+    {\raisebox{0.28\dimexpr#1\relax}{\fontsize{0.55\dimexpr#1\relax}{0.6\dimexpr#1\relax}\selectfont\bfseries\color{cetalprimary}CETAL}}}
+
+% "INFLPR logo | CETAL logo" lockup (style guide, Logos section). #1 is the INFLPR logo height;
+% the CETAL mark is drawn taller so both read at the same visual weight.
 \newcommand{\cetallockup}[1][0.9cm]{%
   \mbox{\cetal@inflprlogo{#1}%
-    \hspace{0.35cm}{\color{cetalrule}\rule[0pt]{0.6pt}{#1}}\hspace{0.35cm}%
-    \raisebox{0.28\dimexpr#1\relax}{\fontsize{0.55\dimexpr#1\relax}{0.6\dimexpr#1\relax}\selectfont\bfseries\color{cetalprimary}CETAL}}}
+    \hspace{0.45\dimexpr#1\relax}\raisebox{-0.3\dimexpr#1\relax}{\color{cetalrule}\rule[0pt]{0.6pt}{1.6\dimexpr#1\relax}}\hspace{0.45\dimexpr#1\relax}%
+    \raisebox{-0.3\dimexpr#1\relax}{\cetal@cetallogo{1.6\dimexpr#1\relax}}}}
 
 % ---------------------------------------------------------------- beamer setup
 \setbeamersize{text margin left=1.1cm, text margin right=1.1cm}
@@ -107,9 +115,10 @@
     \hspace{1.1cm}}%
   \vskip0.35cm}
 
-% Title slide
+% Title slide: title and meta on a tint panel, the lockup on a white strip below it
 \setbeamertemplate{title page}{%
   \begin{tikzpicture}[remember picture,overlay]
+    \fill[cetaltint] (current page.north west) rectangle ([yshift=2.6cm]current page.south east);
     \fill[cetalprimary] (current page.north west) rectangle ([yshift=-0.18cm]current page.north east);
     \node[anchor=south west,inner sep=0pt] at ([xshift=1.1cm,yshift=0.8cm]current page.south west) {\cetallockup[0.9cm]};
   \end{tikzpicture}%
@@ -125,16 +134,17 @@
     \vskip0.45cm
     {\small\color{cetalgrey}\cetal@event\ifx\cetal@event\@empty\else\ \textperiodcentered\ \fi\insertdate\par}
   \end{minipage}
-  \vskip1.6cm}
+  \vskip2.3cm}
 
-% Section divider, same chrome as content slides
-\AtBeginSection[]{%
+% Section divider on the tint, same title and rule as content slides
+\AtBeginSection[]{{%
+  \setbeamercolor{background canvas}{bg=cetaltint}%
   \begin{frame}[plain,noframenumbering]
     \vfill
     {\usebeamerfont{title}\color{cetalprimary}\insertsectionhead\par}
     \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}
     \vfill
-  \end{frame}}
+  \end{frame}}}
 
 % Closing slide: funding acknowledgement, then contact (style guide, Presentations)
 \newcommand{\cetalclosingframe}[1][]{%
