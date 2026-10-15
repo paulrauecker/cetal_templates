@@ -1,0 +1,108 @@
+% cetal-poster.tex -- A0 portrait poster template following the CETAL Style Guide (draft, 2026-10-14)
+% Build:  latexmk -xelatex cetal-poster.tex      (LuaLaTeX also works)
+% Reuses colours, fonts and the INFLPR|CETAL lockup from beamerthemeCETAL.sty.
+\documentclass[final]{beamer}
+\usepackage[orientation=portrait,size=a0,scale=1.0]{beamerposter}
+\usetheme{CETAL}
+\usepackage{qrcode}
+
+% Poster chrome: no slide footline, generous margins
+\setbeamertemplate{footline}{}
+\setbeamertemplate{headline}{}
+\setbeamersize{text margin left=0cm, text margin right=0cm}
+
+% Type sizes at A0 (style guide, Posters)
+\newcommand{\postertitle}{\fontsize{84}{98}\selectfont\bfseries}
+\newcommand{\posterauthors}{\fontsize{40}{48}\selectfont}
+\newcommand{\posterheading}{\fontsize{48}{58}\selectfont\bfseries\color{cetalprimary}}
+\newcommand{\posterbody}{\fontsize{26}{34}\selectfont}
+\newcommand{\postersmall}{\fontsize{19}{24}\selectfont}
+
+\newenvironment{panel}[1]{%
+  \par\vspace{1.4cm}{\posterheading #1\par}\vspace{0.3cm}
+  {\color{cetalprimary}\rule{3cm}{2.5pt}}\par\vspace{0.8cm}\posterbody}{\par}
+
+\begin{document}
+\begin{frame}[t]
+\begin{tikzpicture}[remember picture,overlay]
+  % thin brand bar across the top
+  \fill[cetalprimary] (current page.north west) rectangle ([yshift=-0.8cm]current page.north east);
+\end{tikzpicture}
+\vspace{2.2cm}
+
+\hspace{2.75cm}%
+\begin{minipage}[t]{\dimexpr\paperwidth-5.5cm\relax}
+  % ------------------------------------------------------------ title band
+  \begin{minipage}[t]{0.70\linewidth}
+    {\postertitle\color{cetalprimary}Title of the poster, stating the main result\par}
+    \vspace{1cm}
+    {\posterauthors\underline{Presenter Name}\textsuperscript{1}, Co-author Name\textsuperscript{1,2}\par}
+    \vspace{0.5cm}
+    {\postersmall\color{cetalgrey}
+      \textsuperscript{1}Center for Advanced Laser Technologies (CETAL), National Institute for Laser, Plasma and Radiation Physics (INFLPR), 409 Atomiștilor Street, 077125 Măgurele, Ilfov, Romania\\
+      \textsuperscript{2}Second affiliation\par}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.27\linewidth}\raggedleft
+    \cetallockup[3.2cm]
+  \end{minipage}
+
+  \vspace{1.6cm}
+  % ------------------------------------------------------------ key result
+  {\color{cetalprimary}\rule{\linewidth}{1.5pt}}\par\vspace{0.8cm}
+  {\fontsize{38}{48}\selectfont\bfseries Main result in one sentence, with its number: for example, peak field rises by 4.1\,kV\,m\(^{-1}\) per joule on target.\par}
+  \vspace{0.8cm}
+  {\color{cetalprimary}\rule{\linewidth}{1.5pt}}\par
+
+  % ------------------------------------------------------------ three columns
+  \begin{columns}[t,totalwidth=\linewidth]
+    \begin{column}{0.31\linewidth}
+      \begin{panel}{Motivation}
+        Two or three sentences on why this matters. Body text is 26\,pt so it can be read from 1.5\,m.
+      \end{panel}
+      \begin{panel}{Setup}
+        \centering\fbox{\parbox[c][14cm][c]{0.9\linewidth}{\centering\postersmall\color{cetalgrey} Setup schematic}}\par
+        \raggedright\postersmall Caption in 19--20\,pt, placed under the figure.
+      \end{panel}
+    \end{column}
+    \begin{column}{0.31\linewidth}
+      \begin{panel}{Results}
+        \centering\includegraphics[width=\linewidth]{example-figure.pdf}\par
+        \raggedright\postersmall Figure made at its final size; error bars are 1\(\sigma\).
+      \end{panel}
+      \begin{panel}{Method}
+        \begin{itemize}
+          \item Parallel points as bullets
+          \item SI units with a space: 25\,fs, 10\,PW
+        \end{itemize}
+      \end{panel}
+    \end{column}
+    \begin{column}{0.31\linewidth}
+      \begin{panel}{Conclusions}
+        \begin{enumerate}
+          \item First conclusion, with its number
+          \item Second conclusion
+        \end{enumerate}
+      \end{panel}
+      \begin{panel}{References}
+        \postersmall
+        [1] Author et al., \emph{Journal} \textbf{12}, 345 (2026).\par
+      \end{panel}
+    \end{column}
+  \end{columns}
+\end{minipage}
+
+% ------------------------------------------------------------ bottom band
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south west,text width=0.62\paperwidth,font=\postersmall,text=cetaltext]
+    at ([xshift=2.75cm,yshift=2.5cm]current page.south west)
+    {This work was supported by the Romanian Ministry of Research, Innovation and Digitalization
+     through the INFLPR Core Programme LAPLAS~VII, contract 30N/2023.\\[0.4cm]
+     \color{cetalgrey}[funder logos in one row, same height]};
+  \node[anchor=south east,inner sep=0pt]
+    at ([xshift=-2.75cm,yshift=2.5cm]current page.south east)
+    {\qrcode[height=4cm]{https://doi.org/10.0000/example}};
+  \node[anchor=north east,font=\postersmall,text=cetalgrey]
+    at ([xshift=-2.75cm,yshift=2.2cm]current page.south east) {Paper / preprint};
+\end{tikzpicture}
+\end{frame}
+\end{document}

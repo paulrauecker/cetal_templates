@@ -1,0 +1,162 @@
+% beamerthemeCETAL.sty -- draft Beamer theme following the CETAL Style Guide (draft, 2026-10-14)
+% Compile with LuaLaTeX or XeLaTeX (fontspec).
+%
+% Usage:
+%   \usetheme{CETAL}
+%   \event{Group meeting, CETAL}          % shown in the footer and on the title slide
+%   \cetalfunding{This work was supported by ...}   % used by \cetalclosingframe
+%
+% Logo: put the INFLPR logo next to the .tex file as  inflpr-logo.pdf
+%   (convert the press-kit SVG: rsvg-convert -f pdf -o inflpr-logo.pdf logo-principal.svg)
+% Until it exists, a labelled placeholder box is drawn instead.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeCETAL}[2026/10/14 v0.1 draft CETAL Beamer theme]
+
+\RequirePackage{fontspec}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+
+% ---------------------------------------------------------------- colours
+% PLACEHOLDER brand colours: replace with the fill values from the INFLPR
+% press-kit file logo-principal.svg  (grep -oE '#[0-9A-Fa-f]{6}' logo-principal.svg | sort | uniq -c)
+\definecolor{cetalprimary}{HTML}{1F3A5F}   % PLACEHOLDER
+\definecolor{cetalsecondary}{HTML}{0072B2} % PLACEHOLDER
+\definecolor{cetaltext}{HTML}{1A1A1A}
+\definecolor{cetalgrey}{HTML}{6B6B6B}
+\definecolor{cetalrule}{HTML}{D0D0D0}
+
+% Okabe--Ito data palette (style guide, Colour section), in order
+\definecolor{oiblue}{HTML}{0072B2}
+\definecolor{oivermillion}{HTML}{D55E00}
+\definecolor{oigreen}{HTML}{009E73}
+\definecolor{oiorange}{HTML}{E69F00}
+\definecolor{oipurple}{HTML}{CC79A7}
+\definecolor{oisky}{HTML}{56B4E9}
+\definecolor{oiyellow}{HTML}{F0E442}
+
+% ---------------------------------------------------------------- fonts
+\IfFontExistsTF{Source Sans 3}
+  {\setsansfont{Source Sans 3}[BoldFont={* Semibold}]}
+  {\setsansfont{TeX Gyre Heros}}
+\IfFontExistsTF{Source Code Pro}
+  {\setmonofont{Source Code Pro}[Scale=MatchLowercase]}
+  {}
+
+% ---------------------------------------------------------------- metadata
+\def\cetal@event{}
+\newcommand{\event}[1]{\gdef\cetal@event{#1}}
+\def\cetal@funding{}
+\newcommand{\cetalfunding}[1]{\gdef\cetal@funding{#1}}
+\def\cetal@contact{}
+\newcommand{\cetalcontact}[1]{\gdef\cetal@contact{#1}}
+
+% Logo, or a labelled placeholder of the same footprint
+\newcommand{\cetal@inflprlogo}[1]{%
+  \IfFileExists{inflpr-logo.pdf}%
+    {\includegraphics[height=#1]{inflpr-logo.pdf}}%
+    {\tikz\draw[cetalgrey,dashed]
+       (0,0) rectangle node[font=\tiny,text=cetalgrey]{INFLPR logo} (2.6*#1,#1);}}
+
+% "INFLPR logo | CETAL" lockup (style guide, Logos section)
+\newcommand{\cetallockup}[1][0.9cm]{%
+  \mbox{\cetal@inflprlogo{#1}%
+    \hspace{0.35cm}{\color{cetalrule}\rule[0pt]{0.6pt}{#1}}\hspace{0.35cm}%
+    \raisebox{0.28\dimexpr#1\relax}{\fontsize{0.55\dimexpr#1\relax}{0.6\dimexpr#1\relax}\selectfont\bfseries\color{cetalprimary}CETAL}}}
+
+% ---------------------------------------------------------------- beamer setup
+\setbeamersize{text margin left=1.1cm, text margin right=1.1cm}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=cetaltext,bg=white}
+\setbeamercolor{structure}{fg=cetalprimary}
+\setbeamercolor{frametitle}{fg=cetalprimary}
+\setbeamercolor{title}{fg=cetalprimary}
+\setbeamercolor{subtitle}{fg=cetaltext}
+\setbeamercolor{alerted text}{fg=oivermillion}
+\setbeamercolor{block title}{fg=cetalprimary,bg=}
+\setbeamercolor{block body}{fg=cetaltext,bg=}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\huge,series=\bfseries}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamertemplate{itemize items}{\color{cetalprimary}\raisebox{0.15ex}{\scriptsize$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\color{cetalgrey}--}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{blocks}[default]
+
+% Frame title: one full-sentence message, left aligned, thin accent rule
+\setbeamertemplate{frametitle}{%
+  \vskip0.45cm
+  \begin{beamercolorbox}[wd=\textwidth,left]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle
+    \ifx\insertframesubtitle\@empty\else
+      \par\vskip2pt{\usebeamerfont{framesubtitle}\color{cetalgrey}\normalsize\insertframesubtitle}\fi
+  \end{beamercolorbox}%
+  \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\vskip2pt}
+
+% Footer: short title . speaker . event        n  (9 pt grey, no logo)
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox to\paperwidth{%
+    \hspace{1.1cm}%
+    {\fontsize{8.5}{10}\selectfont\color{cetalgrey}%
+      \insertshorttitle\ \textperiodcentered\ \insertshortauthor
+      \ifx\cetal@event\@empty\else\ \textperiodcentered\ \cetal@event\fi}%
+    \hfill
+    {\fontsize{8.5}{10}\selectfont\color{cetalgrey}\insertframenumber}%
+    \hspace{1.1cm}}%
+  \vskip0.35cm}
+
+% Title slide
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[cetalprimary] (current page.north west) rectangle ([yshift=-0.18cm]current page.north east);
+    \node[anchor=south west,inner sep=0pt] at ([xshift=1.1cm,yshift=0.8cm]current page.south west) {\cetallockup[0.9cm]};
+  \end{tikzpicture}%
+  \vskip0.2cm
+  \begin{minipage}{\textwidth}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\raggedright\inserttitle\par}
+    \ifx\insertsubtitle\@empty\else
+      \vskip0.25cm{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}\fi
+    \vskip0.7cm
+    {\normalsize\insertauthor\par}
+    \vskip0.15cm
+    {\small\color{cetalgrey}\insertinstitute\par}
+    \vskip0.45cm
+    {\small\color{cetalgrey}\cetal@event\ifx\cetal@event\@empty\else\ \textperiodcentered\ \fi\insertdate\par}
+  \end{minipage}
+  \vskip1.6cm}
+
+% Section divider, same chrome as content slides
+\AtBeginSection[]{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    {\usebeamerfont{title}\color{cetalprimary}\insertsectionhead\par}
+    \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}
+    \vfill
+  \end{frame}}
+
+% Closing slide: funding acknowledgement, then contact (style guide, Presentations)
+\newcommand{\cetalclosingframe}[1][]{%
+  \begin{frame}[plain]
+    \vfill
+    {\usebeamerfont{frametitle}\color{cetalprimary}Acknowledgements\par}
+    \vskip3pt{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\par\vskip0.4cm
+    {\small\cetal@funding\par}
+    \ifx\relax#1\relax\else\vskip0.5cm\noindent#1\par\fi
+    \vfill
+    {\small\color{cetalgrey}\cetal@contact\par}
+    \vskip0.5cm
+    \cetallockup[0.75cm]
+    \vskip0.3cm
+  \end{frame}}
+
+% Source citation on a slide, 10 pt (style guide, Presentations)
+\newcommand{\slidecite}[1]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south west,inner sep=0pt,text width=0.8\paperwidth,font=\fontsize{9}{11}\selectfont,text=cetalgrey]
+      at ([xshift=1.1cm,yshift=0.8cm]current page.south west) {#1};
+  \end{tikzpicture}}
+
+\mode<all>
+\endinput

@@ -1,0 +1,14 @@
+[package]
+name = "cetal-touying"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Paul Rauecker"]
+license = "MIT"
+description = "Draft CETAL (INFLPR) slide theme for Touying, following the CETAL Style Guide."
+keywords = ["presentation", "slides", "touying", "theme"]
+compiler = "0.15.0"
+exclude = ["README.md"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
