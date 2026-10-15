@@ -17,7 +17,9 @@ python make_example_figure.py
 latexmk -xelatex cetal-slides-example.tex
 ```
 
-LuaLaTeX works too. Fonts: Source Sans 3 if installed, otherwise TeX Gyre Heros (ships with TeX Live).
+LuaLaTeX works too. Fonts, all SIL OFL: Source Sans 3 for text (otherwise TeX Gyre Heros, which ships
+with TeX Live), Fira Math for maths through `unicode-math` (otherwise Beamer's sans maths) and
+Source Code Pro for code. Fira Math is on CTAN as `firamath`.
 
 ## Logos and colours
 

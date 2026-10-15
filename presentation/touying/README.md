@@ -62,9 +62,12 @@ table and boxes, a figure slide, summary and acknowledgements.
 2. **Brand colours.** `cetal-primary` (`#112C87`, the INFLPR logo blue), `cetal-tint`
    (`#E7EAF3`, the panels) and the greys are at the top of `lib.typ`, generated from the
    repository's `assets/tokens.toml`. Change them there and run `python3 tools/sync_tokens.py`.
-3. **Font.** Install Source Sans 3 (SIL OFL, https://github.com/adobe-fonts/source-sans/releases),
-   or compile with `typst compile --font-path fonts/ main.typ` and a `fonts/` folder.
-   Without it the theme falls back to TeX Gyre Heros.
+3. **Fonts.** Install Source Sans 3 (https://github.com/adobe-fonts/source-sans/releases),
+   Fira Math (https://github.com/firamath/firamath/releases) and Source Code Pro
+   (https://github.com/adobe-fonts/source-code-pro/releases), all SIL OFL, or put them in a
+   `fonts/` folder and compile with `typst compile --font-path fonts/ main.typ`. Without them the
+   theme falls back to TeX Gyre Heros, New Computer Modern Math and DejaVu Sans Mono, and Typst
+   warns about the missing ones. Change them with `font:`, `math-font:` and `code-font:`.
 
 ## Figures
 

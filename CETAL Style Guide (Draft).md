@@ -100,11 +100,14 @@ Use free, open-licence fonts with full Romanian diacritics (ș, ț with comma be
 | Context | Typeface | Notes |
 | --- | --- | --- |
 | Slides and posters | Source Sans 3 | Headings semibold; body regular |
+| Maths on slides and posters | Fira Math | Sans maths that matches Source Sans 3; scaled to 92 % so the x-heights match |
 | Reports and long documents | Source Serif 4, or LaTeX defaults | Body 10–11 pt |
 | Figures | Same as the target document | Match the journal's text font when known |
-| Code and paths | Source Code Pro or JetBrains Mono | — |
+| Code and paths | Source Code Pro | At 90 % of the body size, which matches it optically |
 
-*TBC:* whether INFLPR's 2025 website font should be adopted instead. Its CSS loads Google Fonts, so it is likely also open-licence.
+INFLPR's website uses Open Sans, with Raleway for some headings. The templates keep Source Sans 3: it is narrower, so dense slides fit more text at the same size, and it holds up better at title sizes. Both are open-licence humanist sans faces, so slides and the website do not clash.
+
+Figures set their maths in Source Sans 3 itself (see Scientific figures), slides in Fira Math. Both are sans, so a figure and the equation next to it read as one style.
 
 In LaTeX, load the fonts through `fontspec` (LuaLaTeX or XeLaTeX), or keep Computer Modern for journal submissions. Do not substitute Arial or Calibri in shared templates, since they are not available on Linux nodes.
 

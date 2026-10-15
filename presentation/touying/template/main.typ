@@ -54,8 +54,9 @@
   image("example-figure.pdf"),
   [
     - One message per slide, written as the title
-    - Figures made at final size, text close to the slide text
+    - Figures from `cetal.mplstyle`, made at final size
     - Lines differ by marker as well as colour
+    - Linear fit $E_"pk" = a W + b$ for each probe
     - Units as quantity / unit: $E$ / (kV m#super[−1])
   ],
 )

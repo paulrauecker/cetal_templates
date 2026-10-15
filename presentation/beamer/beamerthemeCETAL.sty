@@ -51,8 +51,18 @@
 \IfFontExistsTF{Source Sans 3}
   {\setsansfont{Source Sans 3}[BoldFont={* Semibold}]}
   {\setsansfont{TeX Gyre Heros}}
+% Code at 0.9 of the body size: Source Code Pro shares Source Sans 3's x-height but is much wider,
+% so at full size it looks too big.
 \IfFontExistsTF{Source Code Pro}
-  {\setmonofont{Source Code Pro}[Scale=MatchLowercase]}
+  {\setmonofont{Source Code Pro}[Scale=0.9]}
+  {}
+% Sans maths, so equations match the text and the figures. Fira Math has a larger x-height than
+% Source Sans 3 (0.527 vs 0.486 em), hence the scale. Without it, Beamer's default sans maths.
+\IfFontExistsTF{Fira Math}
+  {\usefonttheme{professionalfonts}
+   \RequirePackage{unicode-math}
+   \setmathfont{Fira Math}[Scale=0.92]
+   \setmathrm{Fira Math}[Scale=0.92]}% \mathrm too, else it is the roman text font (Latin Modern)
   {}
 
 % ---------------------------------------------------------------- metadata

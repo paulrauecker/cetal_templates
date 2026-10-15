@@ -31,8 +31,9 @@ Typst package; `--check` fails if anything is out of date.
 | Alert | `#D55E00` (Okabe–Ito vermillion) | Chosen |
 | Data palette | Okabe–Ito, 8 colours, fixed order | Chosen, in the guide |
 | Sequential / diverging maps | viridis or cividis / RdBu or vik | Chosen |
-| Type | Source Sans 3 (semibold headings), fallback TeX Gyre Heros | Chosen; INFLPR web font unknown |
-| Math | Source Sans 3 in figures (mathtext); Computer Modern Sans (Beamer), New Computer Modern Math (Typst) on slides | Figures done; slides default |
+| Type | Source Sans 3 (semibold headings), fallback TeX Gyre Heros | Chosen over INFLPR's web font (Open Sans) |
+| Math | Source Sans 3 in figures (mathtext); Fira Math at 0.92 on slides, both themes | Done |
+| Code | Source Code Pro at 0.9 of the body size, both themes | Done |
 
 ## Layout as built
 
@@ -54,8 +55,10 @@ both sample decks).
 
 ## Known rough edges
 
-- **Maths on slides differs.** Beamer sets maths in Computer Modern Sans, Typst in serif New
-  Computer Modern Math. Neither is chosen deliberately.
+- **Fonts must be installed.** Without Fira Math, Beamer silently falls back to Computer Modern
+  Sans maths and Typst warns, then uses New Computer Modern Math. Without Source Sans 3 both fall
+  back to TeX Gyre Heros, which is wider, so slides reflow. Shipping the fonts in `assets/fonts/`
+  is planned.
 - **Code blocks.** Typst code blocks sit on the tint; Beamer has no styled code block (use a
   `block` around `verbatim` in a `[fragile]` frame).
 - **CETAL logo is a PNG only** (1022 × 621 px); fine for slides and the poster lockup, soft

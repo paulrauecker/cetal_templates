@@ -288,6 +288,9 @@
 /// - cetal-logo (content, none): CETAL mark for the lockup; `none` writes "CETAL" instead.
 /// - footer-logo (content, none): Light CETAL logo in the footer of content slides; `none` drops it.
 /// - font (str, array): Body font with fallbacks. Source Sans 3 is open licence (SIL OFL).
+/// - math-font (str, array): Maths font. Fira Math is a sans maths font (SIL OFL) that matches
+///   the body; it is scaled to the body's x-height. Typst warns if it is not installed.
+/// - code-font (str, array): Code font, Source Code Pro (SIL OFL), at the body's x-height.
 /// - align (alignment): Vertical alignment of slide bodies. Default `top`.
 /// - section-numbers (bool): Show "01", "02" above section titles. Default `true`.
 #let cetal-theme(
@@ -299,6 +302,8 @@
   cetal-logo: image("assets/CETAL_Logo_blue.png"),
   footer-logo: image("assets/CETAL_Logo_blue_footer.png"),
   font: ("Source Sans 3", "TeX Gyre Heros"),
+  math-font: ("Fira Math", "New Computer Modern Math"),
+  code-font: ("Source Code Pro", "DejaVu Sans Mono"),
   lang: "en",
   margin-x: 2cm,
   section-numbers: true,
@@ -324,7 +329,13 @@
   set table.hline(stroke: 0.05em + cetal-primary)
   show table.cell.where(y: 0): set text(weight: "semibold")
   show table: it => box(stroke: (y: 0.08em + cetal-primary), inset: (y: 0.15em), it)
-  // Code blocks on the tint (Typst's bundled DejaVu Sans Mono; set a font for raw to change it).
+  // Sans maths, so equations match the text and the figures. Fira Math has a larger x-height
+  // than Source Sans 3 (0.527 vs 0.486 em); 0.92em lines them up.
+  show math.equation: set text(font: math-font, size: 0.92em)
+  // Code at 0.9 of the body size, as in Beamer: Source Code Pro shares Source Sans 3's x-height
+  // but is much wider. Typst scales raw by a further 0.8, hence 1.125em. Blocks at 0.8.
+  show raw: set text(font: code-font, size: 1.125em)
+  show raw.where(block: true): set text(size: 1em)
   show raw.where(block: true): block.with(fill: cetal-tint, inset: 0.55em, width: 100%)
 
   show: touying-slides.with(
