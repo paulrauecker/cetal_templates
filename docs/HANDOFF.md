@@ -13,6 +13,7 @@ sources. Paths are relative to the repository root.
 | `presentation/touying/` | Typst: Touying theme as a local package, starter deck, figure script |
 | `assets/logos/logo-principal.svg` | INFLPR press-kit logo (https://inflpr.ro/kit-de-presa/); one fill colour, `#112C87` |
 | `assets/logos/CETAL_Logo.png` | CETAL logo, dark red (about `#640000`); no brand identity attached |
+| `assets/logos/CETAL_Logo_blue.png`, `..._footer.png` | Recoloured to the primary blue; the footer copy at 50 % opacity (`tools/make_footer_logo.py`) |
 
 ## Current design tokens
 
@@ -40,7 +41,7 @@ Typst package; `--check` fails if anything is out of date.
 | Side margins | 1.1 cm | 2 cm |
 | Title slide | Top colour bar 0.18 cm, title `\huge`, lockup bottom left 0.9 cm | Bar 0.33 cm, title 1.9em, lockup 1.65 cm |
 | Content title | `\Large` semibold, primary, rule 1.2 cm × 1.2 pt; content top-aligned | 1.3em semibold, primary, rule 2.2 cm × 2.2 pt |
-| Footer | 8.5 pt grey: short title · speaker · event, number right | 0.8em grey, same content |
+| Footer | 8.5 pt grey: short title · speaker · event; CETAL logo (50 % opacity, 0.4 cm) and number right | 0.8em grey, same content; logo 0.74 cm |
 | Section slide | "01" grey, title + rule, slightly above centre, not counted | Same |
 | Closing slide | Title-slide panel and lockup; acknowledgements, funding, contact | Same |
 | Boxes | `block`/`alertblock`/`exampleblock` on the tint | `#panel(title:, kind:)` |
@@ -97,7 +98,7 @@ theme pads it back by `margin-x`; keep that if the footer is redesigned.
   laser "CETAL 1 PW".
 - Funding line: Ministry of Research, Innovation and Digitalization, INFLPR Core Programme LAPLAS VII,
   contract 30N/2023 (project code unconfirmed: PN 23 01 vs PN-23 03 01).
-- Content rules from the guide: sentence titles, no logo on content slides, ISO dates, Okabe–Ito
+- Content rules from the guide: sentence titles, only the light CETAL logo in the footer of content slides, ISO dates, Okabe–Ito
   for data, figures made at final size.
 
 ## Still open (outside the aesthetic work)

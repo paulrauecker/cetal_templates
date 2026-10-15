@@ -41,6 +41,8 @@ panels), `cetaltext`, `cetalgrey`, `cetalrule` and `cetalalert`; the data palett
 - `\alert{..}` for colour emphasis; `\textbf` stays dark.
 - `\url` is set in the primary colour; links made with `\href` are not coloured.
 - Section slides show the number ("01"); `\cetalsectionnumbersfalse` in the preamble turns that off.
+- The footer carries a light CETAL logo (`CETAL_Logo_blue_footer.png`, 50 % opacity) left of the
+  slide number; `\cetalfooterlogofalse` turns it off.
 - `\cetalclosingframe[funder logos]` uses the title slide's panel and lockup.
 
 ## Funding line

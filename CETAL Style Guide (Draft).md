@@ -50,7 +50,7 @@ Use only the official INFLPR vector files from the press kit, and never redraw, 
 | Secondary | [logo-secundar.svg](https://inflpr.ro/wp-content/uploads/2025/01/logo-secundar.svg) | *TBC:* likely the compact or alternate lockup |
 | Tertiary | [logo-tertiar.svg](https://inflpr.ro/wp-content/uploads/2025/01/logo-tertiar.svg) | *TBC:* likely the mark alone, for small sizes |
 
-**CETAL lockup.** The CETAL logo (swoosh, "cetal" wordmark and star) is not in the press kit and carries no fixed brand colour; the CETAL website shows it in white. The original file is dark red (#640000). For the templates it is recoloured to the INFLPR blue (#112C87), keeping its gradients, so the two marks read as one family. The lockup is the INFLPR logo, a thin vertical rule, then the CETAL logo at 1.6 times the INFLPR logo height so both carry the same visual weight. Without the CETAL file, the templates write "CETAL" in the heading typeface and primary colour instead. The slide and poster templates draw this lockup with `\cetallockup` (LaTeX) and `cetal-lockup` (Typst). The CETAL logo exists only as a 1022 × 621 px PNG, which is enough up to about 5 cm tall in print; ask for a vector original before using it larger.
+**CETAL lockup.** The CETAL logo (swoosh, "cetal" wordmark and star) is not in the press kit and carries no fixed brand colour; the CETAL website shows it in white. The original file is dark red (#640000). For the templates it is recoloured to the INFLPR blue (#112C87), keeping its gradients, so the two marks read as one family. The lockup is the INFLPR logo, a thin vertical rule, then the CETAL logo at 1.6 times the INFLPR logo height so both carry the same visual weight. Without the CETAL file, the templates write "CETAL" in the heading typeface and primary colour instead. The slide and poster templates draw this lockup with `\cetallockup` (LaTeX) and `cetal-lockup` (Typst). The CETAL logo exists only as a 1022 × 621 px PNG, which is enough up to about 5 cm tall in print; ask for a vector original before using it larger. A lighter copy for slide footers (`CETAL_Logo_blue_footer.png`, 50 % opacity, made by `tools/make_footer_logo.py`) keeps the gradient but reads at the weight of the grey footer text.
 
 **Rules (proposed):**
 
@@ -196,7 +196,7 @@ Use 16:9 slides with a white background and the brand colour only for thin accen
 
 **Content slides:**
 
-- Footer, 9–10 pt grey: short title · speaker · event · slide number. No logo on every slide.
+- Footer, 9–10 pt grey: short title · speaker · event, then a small CETAL logo at 50 % opacity and the slide number at the right. No other logos on content slides; the full lockup stays on the title and closing slides. Drop the footer logo for external talks where the venue asks for neutral slides.
 - Content starts below the title, not centred vertically.
 - One message per slide, written as the slide title in a full sentence ("EMP amplitude scales linearly with laser energy").
 - Figures at slide size (see Scientific figures), never pasted screenshots of paper figures with 6 pt text.

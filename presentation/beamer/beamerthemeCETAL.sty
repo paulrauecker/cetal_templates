@@ -7,6 +7,7 @@
 %   \cetalfunding{This work was supported by ...}   % used by \cetalclosingframe
 %   \cetalcontact{name@inflpr.ro}                    % used by \cetalclosingframe
 %   \cetalsectionnumbersfalse                        % drop "01" above section titles
+%   \cetalfooterlogofalse                            % drop the light CETAL logo in the footer
 %
 % Colours come from assets/tokens.toml; run tools/sync_tokens.py after changing them.
 %
@@ -131,7 +132,12 @@
   \end{beamercolorbox}%
   \vskip-0.17cm{\color{cetalprimary}\rule{1.2cm}{1.2pt}}\vskip-0.24cm}
 
-% Footer: short title . speaker . event        n  (9 pt grey, no logo)
+% Footer: short title . speaker . event       [CETAL logo]  n  (8.5 pt grey). The logo is the
+% light copy made by tools/make_footer_logo.py; it is left out if the file is missing.
+\newif\ifcetalfooterlogo \cetalfooterlogotrue
+\newcommand{\cetal@footerlogo}{%
+  \IfFileExists{CETAL_Logo_blue_footer.png}%
+    {\raisebox{-0.11cm}{\includegraphics[height=0.4cm]{CETAL_Logo_blue_footer.png}}\hspace{0.3cm}}{}}
 \setbeamertemplate{footline}{%
   \leavevmode
   \hbox to\paperwidth{%
@@ -140,6 +146,7 @@
       \insertshorttitle\ \textperiodcentered\ \insertshortauthor
       \ifx\cetal@event\@empty\else\ \textperiodcentered\ \cetal@event\fi}%
     \hfill
+    \ifcetalfooterlogo\cetal@footerlogo\fi
     {\fontsize{8.5}{10}\selectfont\color{cetalgrey}\insertframenumber}%
     \hspace{1.1cm}}%
   \vskip0.35cm}

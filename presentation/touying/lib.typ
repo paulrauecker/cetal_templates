@@ -1,7 +1,7 @@
 // CETAL Touying theme — draft v0.1 (2026-10-15)
 // Implements the CETAL Style Guide (draft): white 16:9 slides, sentence-style titles with a
-// short accent rule, grey footer (short title · speaker · event, slide number), no logo on
-// content slides, INFLPR | CETAL lockup on the title and closing slides.
+// short accent rule, grey footer (short title · speaker · event, light CETAL logo, slide number),
+// INFLPR | CETAL lockup on the title and closing slides.
 //
 //   #import "@local/cetal-touying:0.1.0": *
 //   #show: cetal-theme.with(event: [Group meeting], config-info(title: [...]))
@@ -93,9 +93,17 @@
       place(bottom + left, dy: -2.8em, block(width: 80%, text(size: 1.06em, notes.map(m => m.value).join(linebreak()))))
     }
   }
+  let logo = self.store.footer-logo
   components.left-and-right(
     (title, author, self.store.event).filter(x => x != none).join([ #sym.dot.c ]),
-    context utils.slide-counter.display(),
+    {
+      if logo != none {
+        set image(height: 0.74cm)
+        box(baseline: 0.2cm, logo)
+        h(0.56cm)
+      }
+      context utils.slide-counter.display()
+    },
   )
 }
 
@@ -274,6 +282,7 @@
 /// - short-author (content, auto): Speaker for the footer; `auto` uses `config-info(author: ..)`.
 /// - funding (content, none): Default acknowledgement text for `closing-slide`.
 /// - cetal-logo (content, none): CETAL mark for the lockup; `none` writes "CETAL" instead.
+/// - footer-logo (content, none): Light CETAL logo in the footer of content slides; `none` drops it.
 /// - font (str, array): Body font with fallbacks. Source Sans 3 is open licence (SIL OFL).
 /// - align (alignment): Vertical alignment of slide bodies. Default `top`.
 /// - section-numbers (bool): Show "01", "02" above section titles. Default `true`.
@@ -284,6 +293,7 @@
   short-author: auto,
   funding: none,
   cetal-logo: image("assets/CETAL_Logo_blue.png"),
+  footer-logo: image("assets/CETAL_Logo_blue_footer.png"),
   font: ("Source Sans 3", "TeX Gyre Heros"),
   lang: "en",
   margin-x: 2cm,
@@ -342,6 +352,7 @@
       short-author: short-author,
       funding: funding,
       cetal-logo: cetal-logo,
+      footer-logo: footer-logo,
       margin-x: margin-x,
       section-numbers: section-numbers,
     ),

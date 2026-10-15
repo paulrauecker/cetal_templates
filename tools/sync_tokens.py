@@ -25,6 +25,7 @@ COPIES = {
     MPL: ROOT / "presentation/touying/tools/cetal.mplstyle",
     ROOT / "assets/logos/logo-principal.svg": ROOT / "presentation/touying/assets/logo-principal.svg",
     ROOT / "assets/logos/CETAL_Logo_blue.png": ROOT / "presentation/touying/assets/CETAL_Logo_blue.png",
+    ROOT / "assets/logos/CETAL_Logo_blue_footer.png": ROOT / "presentation/touying/assets/CETAL_Logo_blue_footer.png",
 }
 NOTE = "generated from assets/tokens.toml by tools/sync_tokens.py; edit there"
 

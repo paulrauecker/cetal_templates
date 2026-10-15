@@ -41,7 +41,7 @@ table and boxes, a figure slide, summary and acknowledgements.
 
 | Piece | Use |
 | --- | --- |
-| `cetal-theme.with(event:, short-author:, funding:, config-info(..))` | Sets fonts, colours, margins, footer and ISO dates |
+| `cetal-theme.with(event:, short-author:, funding:, config-info(..))` | Sets fonts, colours, margins, footer and ISO dates; `footer-logo: none` drops the light CETAL logo from the footer |
 | `#title-slide()` | Title, subtitle, authors, institution, event · date, INFLPR \| CETAL lockup |
 | `= Section` | Section divider with "01", "02" (not counted, no footer; `section-numbers: false` to drop the number) |
 | `== Sentence that states the message` | Content slide with the title and accent rule |
