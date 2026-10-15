@@ -122,7 +122,10 @@
 \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
 \setbeamerfont{title}{size=\huge,series=\bfseries}
 \setbeamerfont{subtitle}{size=\large,series=\mdseries}
-\setbeamertemplate{itemize items}{\color{cetalprimary}\raisebox{0.15ex}{\scriptsize$\blacktriangleright$}}
+% Bullet: the text font's own small triangle (U+25B8), which its designer sized and centred on the
+% lowercase letters. Fonts without it (TeX Gyre Heros) get the maths triangle instead.
+\setbeamertemplate{itemize items}{\color{cetalprimary}%
+  \iffontchar\font"25B8 \symbol{"25B8}\else\raisebox{0.15ex}{\scriptsize$\blacktriangleright$}\fi}
 \setbeamertemplate{itemize subitem}{\color{cetalgrey}--}
 \setbeamertemplate{enumerate items}[default]
 
